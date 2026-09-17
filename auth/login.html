@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — Nexora Realty</title>
+  <meta name="description" content="Sign in to your Nexora Realty owner or agent account to manage listings and inquiries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+
+  <!-- ============ MINIMAL TOPBAR ============ -->
+  <header class="auth-topbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-logo">
+        <span class="navbar-logo-mark">N</span>
+        Nexora Realty
+      </a>
+    </div>
+  </header>
+
+  <main class="auth-layout">
+
+    <div class="auth-form-side">
+      <div class="auth-card">
+
+        <!-- ============ LOGIN VIEW ============ -->
+        <div data-login-view>
+          <h1 class="auth-card-heading">Welcome Back</h1>
+          <p class="auth-card-subtext">Sign in to manage your listings and inquiries.</p>
+
+          <form class="auth-form" data-login-form novalidate>
+            <p class="form-error" data-form-error hidden></p>
+
+            <div class="form-group">
+              <label class="form-label" for="login-email">Email</label>
+              <input class="form-input" type="email" id="login-email" name="email" autocomplete="email" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="login-password">Password</label>
+              <div class="password-field">
+                <input class="form-input" type="password" id="login-password" name="password" autocomplete="current-password" required />
+                <button type="button" class="password-toggle" aria-label="Show password" aria-pressed="false">
+                  <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 7 11 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                    <path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 7 11 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row-inline">
+              <label class="checkbox-label" for="login-remember">
+                <input type="checkbox" id="login-remember" name="remember" />
+                Remember me
+              </label>
+              <a href="#" class="forgot-link" data-forgot-toggle>Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+          </form>
+
+          <p class="auth-switch">Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+
+        <!-- ============ LOGIN SUCCESS ============ -->
+        <div class="auth-success" data-login-success hidden>
+          <span class="auth-success-icon" aria-hidden="true">&#10003;</span>
+          <h1 class="auth-card-heading">Welcome back!</h1>
+          <p>Redirecting you to your dashboard&hellip;</p>
+        </div>
+
+        <!-- ============ FORGOT PASSWORD VIEW ============ -->
+        <div data-forgot-view hidden>
+          <div data-forgot-form-wrap>
+            <h1 class="auth-card-heading">Reset Your Password</h1>
+            <p class="auth-card-subtext">Enter your email and we'll send you a link to reset your password.</p>
+
+            <form class="auth-form" data-forgot-form novalidate>
+              <div class="form-group">
+                <label class="form-label" for="forgot-email">Email</label>
+                <input class="form-input" type="email" id="forgot-email" name="email" autocomplete="email" required />
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Send Reset Link</button>
+            </form>
+
+            <p class="auth-switch"><a href="#" data-forgot-back>&larr; Back to Sign In</a></p>
+          </div>
+
+          <div class="auth-success" data-forgot-success hidden>
+            <span class="auth-success-icon" aria-hidden="true">&#9993;</span>
+            <h1 class="auth-card-heading">Check Your Email</h1>
+            <p>If an account exists for that email, we've sent a password reset link.</p>
+            <p class="auth-switch mt-3"><a href="#" data-forgot-back>&larr; Back to Sign In</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="auth-visual-side">
+      <div class="auth-visual-media">
+        <!-- Replace with a premium lifestyle/property photo: assets/images/hero/auth-visual.jpg -->
+        <div class="img-placeholder">
+          <span>Property photo</span>
+        </div>
+        <div class="auth-visual-caption">
+          <h2>Find. Compare. Move.</h2>
+          <p>Manage your listings, track inquiries, and reach buyers directly — all in one place.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../js/auth.js"></script>
+</body>
+</html>

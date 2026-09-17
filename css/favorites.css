@@ -1,0 +1,39 @@
+/* ==========================================================================
+   NEXORA REALTY — FAVORITES PAGE STYLES
+   Depends on css/global.css for tokens and shared components, including
+   .breadcrumb, .property-grid / .property-card (with the optional compare
+   checkbox), .empty-state, and .section-muted.
+   ========================================================================== */
+
+.favorites-header {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-3);
+}
+
+/* ---------- Compare bar ---------- */
+.compare-bar {
+  position: sticky;
+  top: 80px;
+  z-index: 40;
+  background: var(--color-text);
+  color: #ffffff;
+}
+
+.compare-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.compare-bar [data-compare-go][disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.favorites-body {
+  padding-top: var(--space-4);
+}

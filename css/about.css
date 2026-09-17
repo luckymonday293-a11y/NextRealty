@@ -1,0 +1,135 @@
+/* ==========================================================================
+   NEXORA REALTY — ABOUT PAGE STYLES
+   Depends on css/global.css for tokens/shared components and css/home.css
+   for reused marketing-page components (.hero, .why-grid, .stats-row,
+   .cta-section, .section-muted). Only what's unique to About lives here.
+   ========================================================================== */
+
+/* ---------- Intro hero (no search card, unlike the homepage) ---------- */
+.about-hero {
+  padding-top: var(--space-3);
+}
+
+/* ---------- Story section ---------- */
+.story-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.story-media {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.story-content p {
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-top: var(--space-2);
+}
+
+.story-content p:first-of-type {
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 1024px) {
+  .story-layout {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .story-media,
+  .story-content {
+    flex: 1;
+  }
+}
+
+.story-layout--reverse {
+  flex-direction: column-reverse;
+}
+
+@media (min-width: 1024px) {
+  .story-layout--reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+/* ---------- Standalone stats row (About page, no why-grid above it) ---------- */
+.stats-row--standalone {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* ---------- Centered CTA button row (About page's closing CTA) ---------- */
+.hero-cta--centered {
+  justify-content: center;
+  margin-top: var(--space-3);
+}
+
+/* ---------- Process steps ---------- */
+.process-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.process-step {
+  position: relative;
+  text-align: center;
+  padding: var(--space-3);
+}
+
+.process-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.process-step h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.process-step p {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+}
+
+.process-step-connector {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .process-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .process-step-connector {
+    display: block;
+    position: absolute;
+    top: 24px;
+    left: calc(50% + 44px);
+    width: calc(100% - 88px);
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  .process-step:last-child .process-step-connector {
+    display: none;
+  }
+}

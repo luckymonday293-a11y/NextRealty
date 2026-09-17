@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Property — Nexora Realty</title>
+  <meta name="description" content="List a new property on Nexora Realty." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+  <div class="dashboard-shell">
+    <div class="sidebar-overlay" data-sidebar-overlay></div>
+
+    <aside class="dashboard-sidebar" data-dashboard-sidebar>
+      <div class="dashboard-sidebar-header">
+        <a href="../index.html" class="navbar-logo">
+          <span class="navbar-logo-mark">N</span>
+          Nexora Realty
+        </a>
+      </div>
+
+      <nav class="dashboard-nav">
+        <a href="index.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#128202;</span>
+          Overview
+        </a>
+        <a href="properties.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#127968;</span>
+          My Listings
+        </a>
+        <a href="add-property.html" class="dashboard-nav-link is-active">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#10133;</span>
+          Add Property
+        </a>
+        <a href="inquiries.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#128172;</span>
+          Inquiries
+        </a>
+        <a href="profile.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#128100;</span>
+          Profile
+        </a>
+      </nav>
+
+      <div class="dashboard-sidebar-footer">
+        <div class="dashboard-user-card">
+          <div class="dashboard-user-avatar"><span data-dashboard-user-initials></span></div>
+          <div>
+            <p class="dashboard-user-name" data-dashboard-user-name>&nbsp;</p>
+            <p class="dashboard-user-role" data-dashboard-user-role></p>
+          </div>
+        </div>
+        <a href="#" class="dashboard-signout" data-sign-out>Sign Out</a>
+      </div>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="sidebar-toggle-btn" data-sidebar-toggle aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <h1 class="dashboard-page-title">Add Property</h1>
+        <a href="../index.html" class="dashboard-view-site">View Site &rarr;</a>
+      </header>
+
+      <div class="dashboard-content">
+        <div class="demo-banner" data-demo-banner hidden>
+          You're viewing demo data as <strong>Amaka Chukwu</strong>.
+          <a href="../auth/signup.html">Create an account</a> to manage your own listings.
+        </div>
+
+        <p class="section-subtext dashboard-page-subtitle">Fill in the details below, then save as a draft, preview, or publish right away.</p>
+
+        <div data-property-form-wrap>
+          <div class="dashboard-form-card">
+            <form data-property-form data-mode="add" novalidate>
+              <p class="form-error" data-form-error hidden></p>
+
+              <div class="form-group">
+                <label class="form-label" for="prop-title">Property Title</label>
+                <input class="form-input" type="text" id="prop-title" name="title" required />
+              </div>
+
+              <div class="form-row-2col">
+                <div class="form-group">
+                  <label class="form-label" for="prop-price">Price (&#8358;)</label>
+                  <input class="form-input" type="number" id="prop-price" name="price" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prop-type">Property Type</label>
+                  <select class="form-select" id="prop-type" name="type" required>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="villa">Villa</option>
+                    <option value="land">Land</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="office">Office</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-2col">
+                <div class="form-group">
+                  <label class="form-label" for="prop-listing-type">Listing Type</label>
+                  <select class="form-select" id="prop-listing-type" name="listingType" required>
+                    <option value="sale">For Sale</option>
+                    <option value="rent">For Rent</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prop-location">Location</label>
+                  <input class="form-input" type="text" id="prop-location" name="location" placeholder="District, City" required />
+                </div>
+              </div>
+
+              <div class="form-row-3col">
+                <div class="form-group">
+                  <label class="form-label" for="prop-bedrooms">Bedrooms</label>
+                  <input class="form-input" type="number" id="prop-bedrooms" name="bedrooms" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prop-bathrooms">Bathrooms</label>
+                  <input class="form-input" type="number" id="prop-bathrooms" name="bathrooms" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prop-area">Area (sqm)</label>
+                  <input class="form-input" type="number" id="prop-area" name="area" min="0" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="prop-description">Description</label>
+                <textarea class="form-textarea" id="prop-description" name="description" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Amenities</label>
+                <div class="amenities-checkboxes" data-amenities-checkboxes></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Property Images</label>
+                <div class="image-upload">
+                  <input type="file" id="prop-images" accept="image/*" multiple data-image-input />
+                  <p class="image-upload-hint">Photos are simulated in this demo — your listing will use placeholder images regardless of what you select here.</p>
+                  <div class="image-chips" data-image-chips></div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-save-draft>Save Draft</button>
+                <button type="button" class="btn btn-secondary" data-preview>Preview</button>
+                <button type="button" class="btn btn-primary" data-publish>Publish</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="preview-panel" data-preview-panel hidden>
+          <h2 class="details-block-heading">Preview</h2>
+          <div class="preview-card-wrap property-grid" data-preview-card></div>
+          <div class="preview-actions">
+            <button type="button" class="btn btn-secondary" data-preview-back>&larr; Back to Edit</button>
+            <button type="button" class="btn btn-primary" data-preview-publish>Publish</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/listings.js"></script>
+  <script src="../js/inquiries.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

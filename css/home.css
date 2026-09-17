@@ -1,0 +1,360 @@
+/* ==========================================================================
+   NEXORA REALTY — HOMEPAGE STYLES
+   Depends on css/global.css for tokens and shared components (.btn, .card,
+   .badge, .section, .img-placeholder, etc).
+   Several of these (.hero, .why-grid, .stats-row, .cta-section) are generic
+   enough that about.html reuses them directly rather than duplicating —
+   see css/about.css for what's unique to that page.
+   ========================================================================== */
+
+/* ---------- Hero ---------- */
+.hero {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-7);
+  background: linear-gradient(180deg, #f0fdfa 0%, var(--color-bg) 60%);
+}
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.hero-title {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-top: var(--space-2);
+  color: var(--color-text);
+}
+
+.hero-description {
+  margin-top: var(--space-2);
+  font-size: 17px;
+  color: var(--color-text-secondary);
+  max-width: 480px;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.hero-media {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-hover);
+}
+
+.hero-media-placeholder {
+  height: 100%;
+}
+
+.hero-media-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-media-placeholder img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Search card overlaps the bottom edge of the hero for a premium, anchored feel */
+.search-card {
+  position: relative;
+  margin-top: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-hover);
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.search-submit {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 44px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .hero-content {
+    flex: 0 0 48%;
+  }
+
+  .hero-media {
+    flex: 0 0 46%;
+  }
+
+  .hero-title {
+    font-size: var(--fs-hero);
+  }
+
+  .search-card {
+    margin-top: var(--space-6);
+    grid-template-columns: 1fr 1fr 1fr auto;
+    align-items: end;
+  }
+}
+
+/* ---------- Section variants ---------- */
+.section-muted {
+  background: #f1f5f9;
+}
+
+.section-footer {
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
+/* ---------- Property type cards ---------- */
+.type-grid {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: var(--space-4) var(--space-2);
+  text-align: center;
+}
+
+.type-card-icon {
+  font-size: 32px;
+}
+
+.type-card-label {
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .type-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .type-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* ---------- Popular locations ---------- */
+.location-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+
+.location-card {
+  display: block;
+  overflow: hidden;
+}
+
+.location-card-media {
+  aspect-ratio: 16 / 10;
+}
+
+.location-card-body {
+  padding: var(--space-2) var(--space-2) var(--space-3);
+}
+
+.location-card-name {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.location-card-count {
+  margin-top: 4px;
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .location-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Why choose us ---------- */
+.why-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+
+.why-card {
+  padding: var(--space-3);
+}
+
+.why-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--color-primary);
+  font-size: 20px;
+  margin-bottom: var(--space-2);
+}
+
+.why-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.why-card p {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+}
+
+@media (min-width: 768px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .why-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- Stats row ---------- */
+.stats-row {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.stat-label {
+  margin-top: 4px;
+  display: block;
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .stats-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- Testimonials ---------- */
+.testimonial-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+
+.testimonial-card {
+  padding: var(--space-3);
+}
+
+.testimonial-quote {
+  color: var(--color-text);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-primary);
+  background: rgba(15, 118, 110, 0.1);
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+
+.testimonial-role {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .testimonial-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- CTA ---------- */
+.cta-section {
+  background: var(--color-primary);
+  padding-block: var(--space-6);
+}
+
+.cta-inner {
+  text-align: center;
+  color: #fff;
+}
+
+.cta-inner h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.cta-inner p {
+  margin-top: var(--space-2);
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+.cta-inner .btn {
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .cta-inner h2 {
+    font-size: 34px;
+  }
+}

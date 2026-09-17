@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Nexora Realty</title>
+  <meta name="description" content="Manage your property listings and inquiries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+  <div class="dashboard-shell">
+    <div class="sidebar-overlay" data-sidebar-overlay></div>
+
+    <aside class="dashboard-sidebar" data-dashboard-sidebar>
+      <div class="dashboard-sidebar-header">
+        <a href="../index.html" class="navbar-logo">
+          <span class="navbar-logo-mark">N</span>
+          Nexora Realty
+        </a>
+      </div>
+
+      <nav class="dashboard-nav">
+        <a href="index.html" class="dashboard-nav-link is-active">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#128202;</span>
+          Overview
+        </a>
+        <a href="properties.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#127968;</span>
+          My Listings
+        </a>
+        <a href="add-property.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#10133;</span>
+          Add Property
+        </a>
+        <a href="inquiries.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#128172;</span>
+          Inquiries
+        </a>
+        <a href="profile.html" class="dashboard-nav-link">
+          <span class="dashboard-nav-icon" aria-hidden="true">&#128100;</span>
+          Profile
+        </a>
+      </nav>
+
+      <div class="dashboard-sidebar-footer">
+        <div class="dashboard-user-card">
+          <div class="dashboard-user-avatar"><span data-dashboard-user-initials></span></div>
+          <div>
+            <p class="dashboard-user-name" data-dashboard-user-name>&nbsp;</p>
+            <p class="dashboard-user-role" data-dashboard-user-role></p>
+          </div>
+        </div>
+        <a href="#" class="dashboard-signout" data-sign-out>Sign Out</a>
+      </div>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="sidebar-toggle-btn" data-sidebar-toggle aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <h1 class="dashboard-page-title">Overview</h1>
+        <a href="../index.html" class="dashboard-view-site">View Site &rarr;</a>
+      </header>
+
+      <div class="dashboard-content">
+        <div class="demo-banner" data-demo-banner hidden>
+          You're viewing demo data as <strong>Amaka Chukwu</strong>.
+          <a href="../auth/signup.html">Create an account</a> to manage your own listings.
+        </div>
+
+        <p class="dashboard-page-subtitle">Here's a quick snapshot of your listings and inquiries.</p>
+
+        <div class="stat-cards" data-overview-stats>
+          <div class="stat-card">
+            <span class="stat-card-icon" aria-hidden="true">&#127968;</span>
+            <p class="stat-card-value" data-stat-active-listings>0</p>
+            <p class="stat-card-label">Active Listings</p>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-icon" aria-hidden="true">&#128065;</span>
+            <p class="stat-card-value" data-stat-total-views>0</p>
+            <p class="stat-card-label">Property Views</p>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-icon" aria-hidden="true">&#128172;</span>
+            <p class="stat-card-value" data-stat-new-inquiries>0</p>
+            <p class="stat-card-label">New Inquiries</p>
+          </div>
+        </div>
+
+        <div class="dashboard-panels">
+          <div class="dashboard-panel">
+            <div class="dashboard-panel-header">
+              <h2>Recent Listings</h2>
+              <a href="properties.html">View All</a>
+            </div>
+            <div data-recent-listings></div>
+          </div>
+
+          <div class="dashboard-panel">
+            <div class="dashboard-panel-header">
+              <h2>Recent Inquiries</h2>
+              <a href="inquiries.html">View All</a>
+            </div>
+            <div data-recent-inquiries></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/listings.js"></script>
+  <script src="../js/inquiries.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

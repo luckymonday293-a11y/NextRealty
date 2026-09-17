@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Nexora Realty</title>
+  <meta
+    name="description"
+    content="Nexora Realty connects buyers, owners, and agents directly — verified listings, transparent pricing, and no account needed to browse."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/about.css" />
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" data-navbar>
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-logo">
+        <span class="navbar-logo-mark">N</span>
+        Nexora Realty
+      </a>
+
+      <nav class="navbar-links" aria-label="Primary">
+        <a href="properties.html?listingType=sale" class="navbar-link">Buy</a>
+        <a href="properties.html?listingType=rent" class="navbar-link">Rent</a>
+        <a href="agents.html" class="navbar-link">Agents</a>
+        <a href="about.html" class="navbar-link is-active">About</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <a href="favorites.html" class="btn-icon navbar-favorites" aria-label="View favorites">
+          &hearts;
+          <span class="favorites-count" data-favorites-count>0</span>
+        </a>
+        <div class="navbar-cta">
+          <a href="auth/login.html" class="btn btn-secondary btn-sm">Sign In</a>
+          <a href="dashboard/add-property.html" class="btn btn-primary btn-sm">List Your Property</a>
+        </div>
+
+        <button class="navbar-toggle" data-navbar-toggle aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="navbar-mobile container" data-navbar-mobile aria-label="Mobile">
+      <a href="properties.html?listingType=sale" class="navbar-link">Buy</a>
+      <a href="properties.html?listingType=rent" class="navbar-link">Rent</a>
+      <a href="agents.html" class="navbar-link">Agents</a>
+      <a href="about.html" class="navbar-link">About</a>
+      <a href="favorites.html" class="navbar-link">Favorites</a>
+      <a href="auth/login.html" class="navbar-link">Sign In</a>
+      <a href="dashboard/add-property.html" class="btn btn-primary btn-block mt-1">List Your Property</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============ BREADCRUMB ============ -->
+    <div class="container details-breadcrumb-wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> About</p>
+    </div>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero about-hero">
+      <div class="container hero-inner">
+        <div class="hero-content reveal">
+          <span class="eyebrow">About Nexora Realty</span>
+          <h1 class="hero-title">Real Estate, Without The Noise</h1>
+          <p class="hero-description">
+            We connect buyers, owners, and agents directly — verified listings, transparent pricing,
+            and a straight line to the person who actually holds the keys.
+          </p>
+          <div class="hero-cta">
+            <a href="properties.html" class="btn btn-primary">Browse Properties</a>
+            <a href="agents.html" class="btn btn-secondary">Meet Our Agents</a>
+          </div>
+        </div>
+
+        <!-- Replace with a photo of the Nexora team or office: assets/images/about/about-hero.jpg -->
+        <div class="hero-media reveal">
+          <div class="img-placeholder hero-media-placeholder">
+            <span>About Nexora photo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OUR STORY ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="story-layout reveal">
+          <!-- Replace with a lifestyle photo representing the search experience: assets/images/about/about-story.jpg -->
+          <div class="story-media">
+            <div class="img-placeholder">
+              <span>Our story photo</span>
+            </div>
+          </div>
+
+          <div class="story-content">
+            <span class="eyebrow">Why We Built Nexora</span>
+            <h2 class="section-heading">Property search shouldn't feel like a scavenger hunt</h2>
+            <p>
+              Too many people go house-hunting through a maze of outdated listings, unclear pricing, and
+              agents who take days to reply. By the time you find out a property was never really available,
+              you've already lost a week.
+            </p>
+            <p>
+              Nexora Realty started as a simple idea: put verified listings, honest pricing, and direct
+              contact with the actual agent or owner in one place — and let anyone browse, save, and
+              compare properties without being forced to create an account first.
+            </p>
+            <p>
+              Today, that means buyers can shortlist three homes and compare them side by side before ever
+              picking up the phone, and owners and agents can publish a listing and start fielding real
+              inquiries the same day.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="section section-muted">
+      <div class="container">
+        <div class="section-header section-header--center reveal">
+          <span class="eyebrow">Our Reach</span>
+          <h2 class="section-heading">Nexora By The Numbers</h2>
+        </div>
+
+        <div class="stats-row stats-row--standalone reveal">
+          <div class="stat">
+            <span class="stat-number" data-counter-target="1240">0</span>
+            <span class="stat-label">Active Listings</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-counter-target="86">0</span>
+            <span class="stat-label">Verified Agents</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-counter-target="3500">0</span>
+            <span class="stat-label">Buyers Served</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-counter-target="12">0</span>
+            <span class="stat-label">Districts Covered</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VALUES ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header section-header--center reveal">
+          <span class="eyebrow">What We Stand For</span>
+          <h2 class="section-heading">The Principles Behind Every Listing</h2>
+        </div>
+
+        <div class="why-grid reveal">
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#128202;</span>
+            <h3>Transparency</h3>
+            <p>The price you see is the price you get. No hidden fees, no bait-and-switch listings.</p>
+          </div>
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#10003;</span>
+            <h3>Verification</h3>
+            <p>Every verified badge is earned — we check agent credentials and ownership documentation.</p>
+          </div>
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#128172;</span>
+            <h3>Directness</h3>
+            <p>Message the person who actually has the keys, not a call center reading from a script.</p>
+          </div>
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#128275;</span>
+            <h3>Open Access</h3>
+            <p>Browsing, saving, and comparing properties never requires an account to get started.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section section-muted">
+      <div class="container">
+        <div class="section-header section-header--center reveal">
+          <span class="eyebrow">How It Works</span>
+          <h2 class="section-heading">From Search To Move-In</h2>
+        </div>
+
+        <div class="process-steps reveal">
+          <div class="process-step">
+            <span class="process-step-number">1</span>
+            <h3>Search &amp; Filter</h3>
+            <p>Browse verified listings by type, price, and location — no sign-up required.</p>
+            <div class="process-step-connector" aria-hidden="true"></div>
+          </div>
+          <div class="process-step">
+            <span class="process-step-number">2</span>
+            <h3>Compare &amp; Save</h3>
+            <p>Shortlist up to three properties and compare them side by side.</p>
+            <div class="process-step-connector" aria-hidden="true"></div>
+          </div>
+          <div class="process-step">
+            <span class="process-step-number">3</span>
+            <h3>Connect Directly</h3>
+            <p>Reach the agent or owner on WhatsApp, with your questions already in the message.</p>
+            <div class="process-step-connector" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta-section reveal">
+      <div class="container cta-inner">
+        <h2>Ready to get started?</h2>
+        <p>Whether you're searching for your next home or listing one, Nexora makes the next step simple.</p>
+        <div class="hero-cta hero-cta--centered">
+          <a href="properties.html" class="btn btn-accent">Browse Properties</a>
+          <a href="dashboard/add-property.html" class="btn btn-secondary">List Your Property</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="navbar-logo">
+          <span class="navbar-logo-mark">N</span>
+          Nexora Realty
+        </a>
+        <p class="footer-tagline">Find. Compare. Move. A modern marketplace for buyers, owners, and agents.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">in</a>
+          <a href="#" aria-label="X (Twitter)">X</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Explore</h3>
+        <ul class="footer-links">
+          <li><a href="properties.html">All Properties</a></li>
+          <li><a href="agents.html">Find an Agent</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="favorites.html">Favorites</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Property Types</h3>
+        <ul class="footer-links">
+          <li><a href="properties.html?type=house">Houses</a></li>
+          <li><a href="properties.html?type=apartment">Apartments</a></li>
+          <li><a href="properties.html?type=land">Land</a></li>
+          <li><a href="properties.html?type=commercial">Commercial</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Company</h3>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="dashboard/add-property.html">List a Property</a></li>
+          <li><a href="auth/login.html">Sign In</a></li>
+          <li><a href="auth/signup.html">Sign Up</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Nexora Realty. All rights reserved.</p>
+      <p>Built as a frontend portfolio project.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

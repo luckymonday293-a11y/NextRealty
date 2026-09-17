@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexora Realty — Find. Compare. Move.</title>
+  <meta
+    name="description"
+    content="Nexora Realty is a modern property marketplace to discover, compare, save, and inquire about homes, apartments, and land — with direct WhatsApp access to verified agents."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" data-navbar>
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-logo">
+        <span class="navbar-logo-mark">N</span>
+        Nexora Realty
+      </a>
+
+      <nav class="navbar-links" aria-label="Primary">
+        <a href="properties.html?listingType=sale" class="navbar-link">Buy</a>
+        <a href="properties.html?listingType=rent" class="navbar-link">Rent</a>
+        <a href="agents.html" class="navbar-link">Agents</a>
+        <a href="about.html" class="navbar-link">About</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <a href="favorites.html" class="btn-icon navbar-favorites" aria-label="View favorites">
+          &hearts;
+          <span class="favorites-count" data-favorites-count>0</span>
+        </a>
+        <div class="navbar-cta">
+          <a href="auth/login.html" class="btn btn-secondary btn-sm">Sign In</a>
+          <a href="dashboard/add-property.html" class="btn btn-primary btn-sm">List Your Property</a>
+        </div>
+
+        <button
+          class="navbar-toggle"
+          data-navbar-toggle
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="navbar-mobile container" data-navbar-mobile aria-label="Mobile">
+      <a href="properties.html?listingType=sale" class="navbar-link">Buy</a>
+      <a href="properties.html?listingType=rent" class="navbar-link">Rent</a>
+      <a href="agents.html" class="navbar-link">Agents</a>
+      <a href="about.html" class="navbar-link">About</a>
+      <a href="favorites.html" class="navbar-link">Favorites</a>
+      <a href="auth/login.html" class="navbar-link">Sign In</a>
+      <a href="dashboard/add-property.html" class="btn btn-primary btn-block mt-1">List Your Property</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============ HERO + PROPERTY SEARCH ============ -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-content reveal">
+          <span class="eyebrow">Abuja's property marketplace</span>
+          <h1 class="hero-title">Find. Compare. Move.</h1>
+          <p class="hero-description">
+            Browse verified homes, apartments, and land, compare your shortlist side by side,
+            and reach the agent directly on WhatsApp — no account needed to start looking.
+          </p>
+          <div class="hero-cta">
+            <a href="properties.html" class="btn btn-primary">Browse Properties</a>
+            <a href="dashboard/add-property.html" class="btn btn-secondary">List Your Property</a>
+          </div>
+        </div>
+
+        <!-- Hero visual: replace with a lifestyle/property photo: assets/images/hero/hero-main.jpg -->
+        <div class="hero-media reveal">
+  <div class="img-placeholder hero-media-placeholder">
+    <img
+      src="assets/images/hero/hero-property.jpeg"
+      alt="Luxury modern home in Abuja"
+      onerror="this.remove()"
+    >
+    <span>Hero property photo</span>
+  </div>
+</div>
+</div>
+        </div>
+      </div>
+
+      <!-- Property search card, intentionally overlapping the hero/content boundary -->
+      <div class="container">
+        <form class="search-card reveal" action="properties.html" method="get">
+          <div class="form-group search-field">
+            <label class="form-label" for="search-type">Property Type</label>
+            <select class="form-select" id="search-type" name="type">
+              <option value="">Any Type</option>
+              <option value="house">House</option>
+              <option value="apartment">Apartment</option>
+              <option value="villa">Villa</option>
+              <option value="land">Land</option>
+              <option value="commercial">Commercial</option>
+              <option value="office">Office</option>
+            </select>
+          </div>
+          <div class="form-group search-field">
+            <label class="form-label" for="search-location">Location</label>
+            <input class="form-input" id="search-location" name="location" type="text" placeholder="City or district" />
+          </div>
+          <div class="form-group search-field">
+            <label class="form-label" for="search-budget">Max Budget</label>
+            <input class="form-input" id="search-budget" name="maxPrice" type="number" placeholder="Any budget" min="0" />
+          </div>
+          <button type="submit" class="btn btn-primary search-submit">Search</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED PROPERTIES ============ -->
+    <section class="section" id="featured">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Handpicked</span>
+          <h2 class="section-heading">Featured Properties</h2>
+          <p class="section-subtext">
+            A rotating selection of the marketplace's most-viewed and recently verified listings.
+          </p>
+        </div>
+
+        <div class="property-grid reveal" data-featured-properties>
+          <!-- Populated by js/main.js -> renderFeaturedProperties() -->
+        </div>
+
+        <div class="section-footer">
+          <a href="properties.html" class="btn btn-secondary">View All Properties</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POPULAR LOCATIONS ============ -->
+    <section class="section section-muted">
+      <div class="container">
+        <div class="section-header section-header--center reveal">
+          <span class="eyebrow">Where To Look</span>
+          <h2 class="section-heading">Popular Locations</h2>
+          <p class="section-subtext">The districts buyers and renters search for most right now.</p>
+        </div>
+
+        <div class="location-grid reveal" data-popular-locations>
+          <!-- Populated by js/main.js -> renderPopularLocations() -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BROWSE BY PROPERTY TYPE ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header section-header--center reveal">
+          <span class="eyebrow">Categories</span>
+          <h2 class="section-heading">Browse By Property Type</h2>
+        </div>
+
+        <div class="type-grid reveal">
+          <a class="type-card card card-hover" href="properties.html?type=house">
+            <span class="type-card-icon" aria-hidden="true">&#127968;</span>
+            <span class="type-card-label">Houses</span>
+          </a>
+          <a class="type-card card card-hover" href="properties.html?type=apartment">
+            <span class="type-card-icon" aria-hidden="true">&#127970;</span>
+            <span class="type-card-label">Apartments</span>
+          </a>
+          <a class="type-card card card-hover" href="properties.html?type=villa">
+            <span class="type-card-icon" aria-hidden="true">&#127969;</span>
+            <span class="type-card-label">Villas</span>
+          </a>
+          <a class="type-card card card-hover" href="properties.html?type=land">
+            <span class="type-card-icon" aria-hidden="true">&#127793;</span>
+            <span class="type-card-label">Land</span>
+          </a>
+          <a class="type-card card card-hover" href="properties.html?type=commercial">
+            <span class="type-card-icon" aria-hidden="true">&#127974;</span>
+            <span class="type-card-label">Commercial</span>
+          </a>
+          <a class="type-card card card-hover" href="properties.html?type=office">
+            <span class="type-card-icon" aria-hidden="true">&#128188;</span>
+            <span class="type-card-label">Office Space</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY CHOOSE US ============ -->
+    <section class="section section-muted">
+      <div class="container">
+        <div class="section-header section-header--center reveal">
+          <span class="eyebrow">Why Nexora</span>
+          <h2 class="section-heading">Built For How People Actually Search</h2>
+        </div>
+
+        <div class="why-grid reveal">
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#10003;</span>
+            <h3>Verified Listings</h3>
+            <p>Every listing marked "Verified" has been checked against ownership and agent documentation.</p>
+          </div>
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#9878;</span>
+            <h3>Side-by-Side Compare</h3>
+            <p>Shortlist up to three properties and compare price, size, and amenities in one view.</p>
+          </div>
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#128172;</span>
+            <h3>Direct WhatsApp Contact</h3>
+            <p>Skip the contact form. Message the agent or owner directly with the listing details pre-filled.</p>
+          </div>
+          <div class="why-card">
+            <span class="why-icon" aria-hidden="true">&#128274;</span>
+            <h3>No Account To Browse</h3>
+            <p>Search, save favorites, and compare properties freely — create an account only when you're ready to list.</p>
+          </div>
+        </div>
+
+        <div class="stats-row reveal">
+          <div class="stat">
+            <span class="stat-number" data-counter-target="1240">0</span>
+            <span class="stat-label">Active Listings</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-counter-target="86">0</span>
+            <span class="stat-label">Verified Agents</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-counter-target="3500">0</span>
+            <span class="stat-label">Buyers Served</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-counter-target="12">0</span>
+            <span class="stat-label">Districts Covered</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED AGENTS ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Meet The Team</span>
+          <h2 class="section-heading">Featured Agents</h2>
+          <p class="section-subtext">Experienced, verified agents ready to help you buy, rent, or list.</p>
+        </div>
+
+        <div class="agent-grid reveal" data-featured-agents>
+          <!-- Populated by js/main.js -> renderFeaturedAgents() -->
+        </div>
+
+        <div class="section-footer">
+          <a href="agents.html" class="btn btn-secondary">View All Agents</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="section section-muted">
+      <div class="container">
+        <div class="section-header section-header--center reveal">
+          <span class="eyebrow">Testimonials</span>
+          <h2 class="section-heading">What People Are Saying</h2>
+        </div>
+
+        <div class="testimonial-grid reveal" data-testimonials>
+          <!-- Populated by js/main.js -> renderTestimonials() -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CALL TO ACTION ============ -->
+    <section class="cta-section reveal">
+      <div class="container cta-inner">
+        <h2>Ready to list your property?</h2>
+        <p>Reach thousands of active buyers and renters. Publish a listing in minutes, no commission to get started.</p>
+        <a href="dashboard/add-property.html" class="btn btn-accent">Get Started</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="navbar-logo">
+          <span class="navbar-logo-mark">N</span>
+          Nexora Realty
+        </a>
+        <p class="footer-tagline">Find. Compare. Move. A modern marketplace for buyers, owners, and agents.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">in</a>
+          <a href="#" aria-label="X (Twitter)">X</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Explore</h3>
+        <ul class="footer-links">
+          <li><a href="properties.html">All Properties</a></li>
+          <li><a href="agents.html">Find an Agent</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="favorites.html">Favorites</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Property Types</h3>
+        <ul class="footer-links">
+          <li><a href="properties.html?type=house">Houses</a></li>
+          <li><a href="properties.html?type=apartment">Apartments</a></li>
+          <li><a href="properties.html?type=land">Land</a></li>
+          <li><a href="properties.html?type=commercial">Commercial</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Company</h3>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="dashboard/add-property.html">List a Property</a></li>
+          <li><a href="auth/login.html">Sign In</a></li>
+          <li><a href="auth/signup.html">Sign Up</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Nexora Realty. All rights reserved.</p>
+      <p>Built as a frontend portfolio project.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

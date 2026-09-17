@@ -1,0 +1,242 @@
+/* ==========================================================================
+   NEXORA REALTY — AUTH PAGES STYLES (login, signup)
+   Depends on css/global.css for tokens and shared components, including
+   .password-field / .password-toggle, .form-group, .btn, .form-input.
+   ========================================================================== */
+
+/* ---------- Minimal auth top bar (no full nav — keeps focus on the form) ---------- */
+.auth-topbar {
+  padding-block: var(--space-3);
+}
+
+/* ---------- Split-screen layout ---------- */
+.auth-layout {
+  min-height: calc(100vh - 76px);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4) var(--space-2) var(--space-6);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-card-heading {
+  font-size: 30px;
+}
+
+.auth-card-subtext {
+  margin-top: var(--space-1);
+  color: var(--color-text-secondary);
+}
+
+.auth-form {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-visual-side {
+  display: none;
+}
+
+.auth-visual-media {
+  height: 100%;
+  min-height: 320px;
+  position: relative;
+}
+
+.auth-visual-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 50%, rgba(15, 23, 42, 0.75) 100%);
+  pointer-events: none;
+}
+
+.auth-visual-caption {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  right: var(--space-4);
+  color: #fff;
+  z-index: 1;
+}
+
+.auth-visual-caption h2 {
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.auth-visual-caption p {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--fs-small);
+  max-width: 360px;
+}
+
+@media (min-width: 1024px) {
+  .auth-layout {
+    flex-direction: row;
+  }
+
+  .auth-form-side {
+    flex: 0 0 50%;
+  }
+
+  .auth-visual-side {
+    display: block;
+    flex: 0 0 50%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .auth-visual-side .img-placeholder {
+    height: 100%;
+  }
+}
+
+/* ---------- Form footer / switch link ---------- */
+.auth-switch {
+  margin-top: var(--space-4);
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+}
+
+.auth-switch a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.auth-switch a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ---------- Row layouts ---------- */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-row-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-small);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.checkbox-label input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.terms-checkbox {
+  align-items: flex-start;
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-3);
+  line-height: 1.4;
+}
+
+.terms-checkbox input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.forgot-link {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.forgot-link:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ---------- Role selector (signup) ---------- */
+.role-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.role-option {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.role-option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.role-option-icon {
+  font-size: 22px;
+}
+
+.role-option-label {
+  display: block;
+  margin-top: 4px;
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+
+.role-option:has(input:focus-visible) {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.role-option.is-selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+  background: rgba(15, 118, 110, 0.04);
+}
+
+/* ---------- Success state ---------- */
+.auth-success {
+  text-align: center;
+}
+
+.auth-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--color-success);
+  font-size: 24px;
+  margin-bottom: var(--space-2);
+}
+
+.auth-success p {
+  color: var(--color-text-secondary);
+  margin-top: 6px;
+}

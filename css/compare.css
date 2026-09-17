@@ -1,0 +1,148 @@
+/* ==========================================================================
+   NEXORA REALTY — COMPARE PAGE STYLES
+   Depends on css/global.css for tokens and shared components, including
+   .breadcrumb, .empty-state, and .img-placeholder.
+
+   The table scrolls horizontally *within* .compare-table-wrap on narrow
+   screens (the row-label column stays pinned via position:sticky) rather
+   than ever causing page-level horizontal overflow.
+   ========================================================================== */
+
+.compare-header {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-3);
+}
+
+.compare-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  -webkit-overflow-scrolling: touch;
+}
+
+.compare-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  background: var(--color-surface);
+}
+
+.compare-table th,
+.compare-table td {
+  border-top: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
+  padding: 14px 16px;
+  font-size: var(--fs-small);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.compare-table thead th {
+  border-top: none;
+  vertical-align: top;
+}
+
+/* Row-label column: sticky so it stays visible while scrolling horizontally */
+.compare-row-label {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--color-surface);
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  border-left: none;
+}
+
+.compare-col {
+  width: 220px;
+  padding: var(--space-3) var(--space-2);
+  position: relative;
+}
+
+.compare-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.compare-remove:hover {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.compare-col-media {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.compare-col-title {
+  display: block;
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+}
+
+.compare-col-title:hover {
+  color: var(--color-primary);
+}
+
+.has-amenity {
+  color: var(--color-success);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.no-amenity {
+  color: var(--color-text-muted);
+}
+
+.compare-section-divider th {
+  background: var(--color-bg);
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  border-left: none;
+}
+
+.compare-add-slot {
+  border-left: 1px dashed var(--color-border);
+}
+
+.compare-add-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 168px;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.compare-add-link span {
+  font-size: 22px;
+  color: var(--color-primary);
+}
+
+.compare-add-link:hover {
+  color: var(--color-primary);
+}

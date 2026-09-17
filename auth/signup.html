@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up — Nexora Realty</title>
+  <meta name="description" content="Create a Nexora Realty owner or agent account to list and manage properties." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+
+  <!-- ============ MINIMAL TOPBAR ============ -->
+  <header class="auth-topbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-logo">
+        <span class="navbar-logo-mark">N</span>
+        Nexora Realty
+      </a>
+    </div>
+  </header>
+
+  <main class="auth-layout">
+
+    <div class="auth-form-side">
+      <div class="auth-card">
+
+        <!-- ============ SIGNUP VIEW ============ -->
+        <div data-signup-view>
+          <h1 class="auth-card-heading">Create Your Account</h1>
+          <p class="auth-card-subtext">Join as an owner or agent to start listing properties.</p>
+
+          <form class="auth-form" data-signup-form novalidate>
+            <p class="form-error" data-form-error hidden></p>
+
+            <div class="role-selector">
+              <label class="role-option" data-role-option>
+                <input type="radio" name="role" value="owner" required />
+                <span class="role-option-icon" aria-hidden="true">&#127968;</span>
+                <span class="role-option-label">Property Owner</span>
+              </label>
+              <label class="role-option" data-role-option>
+                <input type="radio" name="role" value="agent" required />
+                <span class="role-option-icon" aria-hidden="true">&#128188;</span>
+                <span class="role-option-label">Real Estate Agent</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-name">Full Name</label>
+              <input class="form-input" type="text" id="signup-name" name="name" autocomplete="name" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-email">Email</label>
+              <input class="form-input" type="email" id="signup-email" name="email" autocomplete="email" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-phone">Phone</label>
+              <input class="form-input" type="tel" id="signup-phone" name="phone" autocomplete="tel" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-password">Password</label>
+              <div class="password-field">
+                <input class="form-input" type="password" id="signup-password" name="password" autocomplete="new-password" minlength="8" required />
+                <button type="button" class="password-toggle" aria-label="Show password" aria-pressed="false">
+                  <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 7 11 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                    <path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 7 11 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-confirm-password">Confirm Password</label>
+              <div class="password-field">
+                <input class="form-input" type="password" id="signup-confirm-password" name="confirmPassword" autocomplete="new-password" minlength="8" required />
+                <button type="button" class="password-toggle" aria-label="Show password" aria-pressed="false">
+                  <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 7 11 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                    <path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 7 11 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <label class="checkbox-label terms-checkbox" for="signup-terms">
+              <input type="checkbox" id="signup-terms" required />
+              I agree to the Terms of Service and Privacy Policy
+            </label>
+
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+          </form>
+
+          <p class="auth-switch">Already have an account? <a href="login.html">Sign In</a></p>
+        </div>
+
+        <!-- ============ SIGNUP SUCCESS ============ -->
+        <div class="auth-success" data-signup-success hidden>
+          <span class="auth-success-icon" aria-hidden="true">&#10003;</span>
+          <h1 class="auth-card-heading">Account Created!</h1>
+          <p>Redirecting you to your dashboard&hellip;</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="auth-visual-side">
+      <div class="auth-visual-media">
+        <!-- Replace with a premium lifestyle/property photo: assets/images/hero/auth-visual.jpg -->
+        <div class="img-placeholder">
+          <span>Property photo</span>
+        </div>
+        <div class="auth-visual-caption">
+          <h2>List with confidence.</h2>
+          <p>Publish a listing in minutes and reach thousands of active buyers and renters.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../js/auth.js"></script>
+</body>
+</html>
