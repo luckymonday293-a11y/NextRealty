@@ -296,6 +296,20 @@ function initRoleSelector() {
   });
 }
 
+function initGoogleAuth() {
+  document.querySelectorAll("[data-google-auth]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const form = button.closest(".auth-card")?.querySelector("form");
+      if (form) {
+        showFormError(
+          form,
+          "Google authentication will be available when the backend OAuth connection is added."
+        );
+      }
+    });
+  });
+}
+
 /* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   initPasswordToggles();
@@ -303,4 +317,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initForgotPassword();
   initSignupForm();
   initRoleSelector();
+  initGoogleAuth();
 });

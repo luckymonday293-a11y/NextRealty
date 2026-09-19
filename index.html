@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/home.css" />
 </head>
-<body>
+<body class="home-page">
 
   <!-- ============ NAVBAR ============ -->
   <header class="navbar" data-navbar>
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <nav class="navbar-mobile container" data-navbar-mobile aria-label="Mobile">
+        <nav class="navbar-mobile container" data-navbar-mobile aria-label="Mobile">
       <a href="properties.html?listingType=sale" class="navbar-link">Buy</a>
       <a href="properties.html?listingType=rent" class="navbar-link">Rent</a>
       <a href="agents.html" class="navbar-link">Agents</a>
@@ -86,11 +86,11 @@
     <img
       src="assets/images/hero/hero-property.jpeg"
       alt="Luxury modern home in Abuja"
-      onerror="this.remove()"
+      onload="this.nextElementSibling.style.display='none'"
+      onerror="this.style.display='none'"
     >
     <span>Hero property photo</span>
   </div>
-</div>
 </div>
         </div>
       </div>
@@ -118,7 +118,10 @@
             <label class="form-label" for="search-budget">Max Budget</label>
             <input class="form-input" id="search-budget" name="maxPrice" type="number" placeholder="Any budget" min="0" />
           </div>
-          <button type="submit" class="btn btn-primary search-submit">Search</button>
+          <button type="submit" class="btn btn-primary search-submit" aria-label="Search properties">
+            <span class="search-icon" aria-hidden="true"></span>
+            <span class="search-submit-label">Search</span>
+          </button>
         </form>
       </div>
     </section>

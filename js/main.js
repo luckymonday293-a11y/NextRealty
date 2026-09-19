@@ -223,23 +223,45 @@ function agentCardMarkup(agent) {
   const verifiedBadge = agent.verified
     ? '<span class="badge badge-verified">&#10003; Verified</span>'
     : "";
-  const listingsCount = NEXORA_PROPERTIES.filter((p) => p.agent === agent.id).length;
+
+  const listingsCount = NEXORA_PROPERTIES.filter(
+    (p) => p.agent === agent.id
+  ).length;
+
+  const initials = agent.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("");
 
   return `
     <article class="agent-card card card-hover">
       <a href="agent-profile.html?id=${agent.id}" class="agent-card-photo">
-        <!-- Replace with real agent photo: ${agent.photo} -->
         <div class="img-placeholder">
-          <span>${agent.name.split(" ").map((n) => n[0]).join("")}</span>
+          <img
+            src="${agent.photo || ""}"
+            alt="${agent.name}"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          >
+          <span style="${agent.photo ? "display:none;" : "display:flex;"}">${initials}</span>
         </div>
       </a>
+
       <div class="agent-card-body">
         <h3 class="agent-card-name">
           <a href="agent-profile.html?id=${agent.id}">${agent.name}</a>
         </h3>
+
         ${verifiedBadge}
-        <p class="agent-card-meta">${agent.experienceYears} yrs experience &middot; ${listingsCount} listings</p>
-        <p class="agent-card-rating">&#9733; ${agent.rating.toFixed(1)} (${agent.reviewCount} reviews)</p>
+
+        <p class="agent-card-meta">
+          ${agent.experienceYears} yrs experience &middot; ${listingsCount} listings
+        </p>
+
+        <p class="agent-card-rating">
+          &#9733; ${agent.rating.toFixed(1)} (${agent.reviewCount} reviews)
+        </p>
+
         <a href="agent-profile.html?id=${agent.id}" class="agent-card-cta">
           View Profile <span aria-hidden="true">&rarr;</span>
         </a>
@@ -259,9 +281,14 @@ function testimonialCardMarkup(testimonial) {
     <article class="testimonial-card card">
       <p class="testimonial-quote">&ldquo;${testimonial.quote}&rdquo;</p>
       <div class="testimonial-author">
-        <!-- Replace with real customer photo: ${testimonial.avatar} -->
         <div class="img-placeholder testimonial-avatar">
-          <span>${testimonial.name.split(" ").map((n) => n[0]).join("")}</span>
+          <img
+            src="${testimonial.avatar || ""}"
+            alt="${testimonial.name}"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          >
+          <span style="${testimonial.avatar ? "display:none;" : "display:flex;"}">${testimonial.name.split(" ").map((n) => n[0]).join("")}</span>
         </div>
         <div>
           <p class="testimonial-name">${testimonial.name}</p>
@@ -279,11 +306,22 @@ function renderTestimonials() {
 }
 
 function locationCardMarkup(district, count) {
+  const locationProperty = NEXORA_PROPERTIES.find(
+    (property) => getDistrictName(property.location) === district
+  );
+  const locationImage =
+    NEXORA_LOCATION_IMAGES[district] || locationProperty?.images?.[0] || "";
+
   return `
     <a class="location-card card card-hover" href="properties.html?location=${encodeURIComponent(district)}">
-      <!-- Replace with a representative photo for ${district} -->
       <div class="img-placeholder location-card-media">
-        <span>${district}</span>
+        <img
+          src="${locationImage}"
+          alt="Properties in ${district}"
+          loading="lazy"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+        <span style="${locationImage ? "display:none;" : "display:flex;"}">${district}</span>
       </div>
       <div class="location-card-body">
         <h3 class="location-card-name">${district}</h3>

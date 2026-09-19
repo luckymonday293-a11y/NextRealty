@@ -209,11 +209,37 @@ const NEXORA_PROPERTIES = [
   }
 ];
 
+// Add each real location image path here. Replace this map with the image URL
+// returned by the backend when location data is connected to an API.
+const NEXORA_LOCATION_IMAGES = {
+   Maitama: "assets/images/locations/bokkos.jpeg",
+   Jabi: "assets/images/locations/kunet.jpeg",
+   Gwarinpa: "assets/images/locations/pankshin.jpeg",
+  "Central Business District": "assets/images/locations/deres.jpeg",
+   Asokoro: "assets/images/locations/tanti.jpeg",
+   Lugbe: "assets/images/locations/tudu.jpeg",
+   "Wuse II": "assets/images/locations/wuse.jpeg",
+  Garki: "assets/images/locations/garke.jpeg"
+};
+
+// Add future page images here so uploads can be connected in one place.
+// Use paths relative to the page that renders the image, or backend URLs later.
+const NEXORA_MEDIA_IMAGES = {
+  hero: "assets/images/hero/hero-property.jpeg",
+  aboutHero: "", // Add: assets/images/about/about-hero.jpeg
+  aboutStory: "", // Add: assets/images/about/about-story.jpeg
+  authVisual: "", // Add: assets/images/hero/auth-visual.jpeg
+  agentPhotos: "assets/images/agents/",
+  testimonialAvatars: "assets/images/testimonials/",
+  propertyPhotos: "assets/images/properties/",
+  locationPhotos: "assets/images/locations/"
+};
+
 const NEXORA_AGENTS = [
   {
     id: "a001",
     name: "Amaka Chukwu",
-    photo: "assets/images/agents/agent-01.jpg",
+    photo: "assets/images/agents/agent-01.jpeg",
     verified: true,
     rating: 4.9,
     reviewCount: 58,
@@ -226,7 +252,7 @@ const NEXORA_AGENTS = [
   {
     id: "a002",
     name: "Tunde Bakare",
-    photo: "assets/images/agents/agent-02.jpg",
+    photo: "assets/images/agents/agent-02.jpeg",
     verified: true,
     rating: 4.7,
     reviewCount: 41,
@@ -239,7 +265,7 @@ const NEXORA_AGENTS = [
   {
     id: "a003",
     name: "Ifeoma Eze",
-    photo: "assets/images/agents/agent-03.jpg",
+    photo: "assets/images/agents/agent-03.jpeg",
     verified: false,
     rating: 4.5,
     reviewCount: 19,
@@ -258,7 +284,7 @@ const NEXORA_TESTIMONIALS = [
     role: "Bought a home in Gwarinpa",
     quote:
       "Nexora made comparing properties simple. I shortlisted three homes, compared them side by side, and reached out to the agent directly on WhatsApp.",
-    avatar: "assets/images/testimonials/client-01.jpg"
+    avatar: "assets/images/testimonials/client-01.jpeg"
   },
   {
     id: "t002",
@@ -266,7 +292,7 @@ const NEXORA_TESTIMONIALS = [
     role: "Rented an apartment in Jabi",
     quote:
       "I could see exactly what was included with each listing before contacting anyone, which saved me a lot of back and forth.",
-    avatar: "assets/images/testimonials/client-02.jpg"
+    avatar: "assets/images/testimonials/client-02.jpeg"
   },
   {
     id: "t003",
@@ -274,7 +300,7 @@ const NEXORA_TESTIMONIALS = [
     role: "Listed a property as an owner",
     quote:
       "Publishing my listing took minutes and I started getting serious inquiries within the first week.",
-    avatar: "assets/images/testimonials/client-03.jpg"
+    avatar: "assets/images/testimonials/client-03.jpeg"
   }
 ];
 
