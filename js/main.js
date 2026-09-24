@@ -15,6 +15,26 @@ function initNavbar() {
 
   if (!navbar) return;
 
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  const currentListingType = new URLSearchParams(window.location.search).get("listingType");
+  const isCurrentLink = (link) => {
+    const url = new URL(link.href, window.location.href);
+    const linkPage = url.pathname.split("/").pop() || "index.html";
+    const linkListingType = url.searchParams.get("listingType");
+
+    if (linkPage === "properties.html") {
+      return currentPage === "properties.html" && linkListingType === currentListingType;
+    }
+
+    return linkPage === currentPage;
+  };
+
+  navbar.querySelectorAll(".navbar-link").forEach((link) => {
+    link.classList.toggle("is-active", isCurrentLink(link));
+    if (link.classList.contains("is-active")) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+
   window.addEventListener(
     "scroll",
     () => {
@@ -153,7 +173,8 @@ function propertyCardMarkup(property, options = {}) {
     ? '<span class="badge badge-featured">Featured</span>'
     : "";
   const priceSuffix = property.listingType === "rent" ? " / year" : "";
-  const primaryImage = property.images[0];
+  const primaryImage = property.images?.[0] || NEXORA_DEFAULT_PROPERTY_IMAGES[0];
+  const imagePath = getAssetPath(primaryImage);
 
   const compareToggle = options.showCompare
     ? `
@@ -171,10 +192,10 @@ function propertyCardMarkup(property, options = {}) {
   return `
     <article class="property-card card card-hover">
       <a href="property-details.html?id=${property.id}" class="property-card-media">
-        <!-- Replace this placeholder with the property's exterior photo: ${primaryImage} -->
+        <!-- Replace this placeholder with the property's exterior photo: ${imagePath} -->
         <div class="img-placeholder">
   <img
-    src="${primaryImage || ""}"
+    src="${imagePath}"
     alt="${property.title}"
     onerror="this.remove()"
   />
@@ -214,8 +235,12 @@ function renderFeaturedProperties() {
   const grid = document.querySelector("[data-featured-properties]");
   if (!grid) return;
 
-  const featured = NEXORA_PROPERTIES.filter((property) => property.featured).slice(0, 6);
-  grid.innerHTML = featured.map(propertyCardMarkup).join("");
+  const properties = getPublicProperties();
+  const featured = [
+    ...properties.filter((property) => property.featured),
+    ...properties.filter((property) => !property.featured)
+  ];
+  grid.innerHTML = featured.slice(0, 6).map(propertyCardMarkup).join("");
   initFavoriteButtons(grid);
 }
 
@@ -224,7 +249,7 @@ function agentCardMarkup(agent) {
     ? '<span class="badge badge-verified">&#10003; Verified</span>'
     : "";
 
-  const listingsCount = NEXORA_PROPERTIES.filter(
+  const listingsCount = getPublicProperties().filter(
     (p) => p.agent === agent.id
   ).length;
 
@@ -238,7 +263,7 @@ function agentCardMarkup(agent) {
       <a href="agent-profile.html?id=${agent.id}" class="agent-card-photo">
         <div class="img-placeholder">
           <img
-            src="${agent.photo || ""}"
+            src="${getAssetPath(agent.photo)}"
             alt="${agent.name}"
             loading="lazy"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -309,8 +334,9 @@ function locationCardMarkup(district, count) {
   const locationProperty = NEXORA_PROPERTIES.find(
     (property) => getDistrictName(property.location) === district
   );
-  const locationImage =
-    NEXORA_LOCATION_IMAGES[district] || locationProperty?.images?.[0] || "";
+  const locationImage = getAssetPath(
+    NEXORA_LOCATION_IMAGES[district] || locationProperty?.images?.[0] || ""
+  );
 
   return `
     <a class="location-card card card-hover" href="properties.html?location=${encodeURIComponent(district)}">
@@ -336,7 +362,7 @@ function renderPopularLocations() {
   if (!grid) return;
 
   const counts = new Map();
-  NEXORA_PROPERTIES.forEach((property) => {
+  getPublicProperties().forEach((property) => {
     const district = getDistrictName(property.location);
     counts.set(district, (counts.get(district) || 0) + 1);
   });

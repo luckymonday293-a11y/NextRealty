@@ -2,9 +2,9 @@
    NEXORA REALTY — PROPERTIES.JS
    Drives the property listings page: reads filters from the URL (so links
    from the homepage search and nav keep working), filters/sorts the shared
-   NEXORA_PROPERTIES array, paginates the results, and keeps the URL in
+  public property catalog, paginates the results, and keeps the URL in
    sync as the user changes filters so the page stays bookmarkable.
-   Relies on data.js (NEXORA_PROPERTIES, formatPrice) and main.js
+  Relies on data.js (getPublicProperties, formatPrice) and main.js
    (propertyCardMarkup, initFavoriteButtons) having already loaded.
    ========================================================================== */
 
@@ -82,7 +82,7 @@ function syncStateToURL() {
 function getFilteredProperties() {
   const search = currentFilters.search.trim().toLowerCase();
 
-  return NEXORA_PROPERTIES.filter((property) => {
+  return getPublicProperties().filter((property) => {
     if (
       search &&
       !property.title.toLowerCase().includes(search) &&

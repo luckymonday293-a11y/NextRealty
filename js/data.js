@@ -95,7 +95,7 @@ const NEXORA_PROPERTIES = [
     description:
       "Full-floor office space with floor-to-ceiling windows, three meeting rooms, and dedicated basement parking.",
     amenities: ["Meeting Rooms", "Basement Parking", "Backup Generator", "Fiber Internet"],
-    featured: false,
+    featured: true,
     views: 96,
     agent: "a002",
     images: [
@@ -145,7 +145,7 @@ const NEXORA_PROPERTIES = [
     description:
       "Fenced and gazetted residential plot in a fast-developing estate, with survey and title documents ready.",
     amenities: ["Gazetted Title", "Fenced", "Estate Road Access", "Close to Expressway"],
-    featured: false,
+    featured: true,
     views: 64,
     agent: "a003",
     images: [
@@ -195,7 +195,7 @@ const NEXORA_PROPERTIES = [
     description:
       "Multi-unit commercial plaza with existing tenants, street-facing retail frontage, and ample customer parking.",
     amenities: ["Retail Frontage", "Tenant Parking", "Backup Generator", "Loading Bay"],
-    featured: false,
+    featured: true,
     views: 88,
     agent: "a001",
     images: [
@@ -206,7 +206,67 @@ const NEXORA_PROPERTIES = [
       "assets/images/properties/property-08/bathroom.jpeg",
       "assets/images/properties/property-08/additional-space.jpeg"
     ]
-  }
+  },
+
+  {
+    id: "p009",
+    title: "Harbor View Duplex",
+    price: 2600000,
+    location: "Wuse II, Abuja",
+    type: "house",
+    listingType: "rent",
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 260,
+    description:
+      "Modern duplex on a serene close, featuring an en-suite master bedroom and a compact home office nook.",
+    amenities: ["En-suite Bedrooms", "Home Office", "Parking", "24/7 Security"],
+    featured: false,
+    views: 132,
+    agent: "a002",
+    images: [
+      "assets/images/properties/property-07/exterior.jpeg",
+      "assets/images/properties/property-07/living-room.jpeg",
+      "assets/images/properties/property-07/kitchen.jpeg",
+      "assets/images/properties/property-07/bedroom.jpeg",
+      "assets/images/properties/property-07/bathroom.jpeg",
+      "assets/images/properties/property-07/additional-space.jpeg"
+    ]
+  },
+  {
+    id: "p0010",
+    title: "Lucky office",
+    price: 2600000,
+    location: "Wuse II, Abuja",
+    type: "house",
+    listingType: "rent",
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 260,
+    description:
+      "Modern duplex on a serene close, featuring an en-suite master bedroom and a compact home office nook.",
+    amenities: ["En-suite Bedrooms", "Home Office", "Parking", "24/7 Security"],
+    featured: true,
+    views: 132,
+    agent: "a002",
+    images: [
+      "assets/images/properties/property-07/exterior.jpeg",
+      "assets/images/properties/property-07/living-room.jpeg",
+      "assets/images/properties/property-07/kitchen.jpeg",
+      "assets/images/properties/property-07/bedroom.jpeg",
+      "assets/images/properties/property-07/bathroom.jpeg",
+      "assets/images/properties/property-07/additional-space.jpeg"
+    ]
+  },
+];
+
+const NEXORA_DEFAULT_PROPERTY_IMAGES = [
+  "assets/images/properties/property-01/exterior.jpeg",
+  "assets/images/properties/property-01/living-room.jpeg",
+  "assets/images/properties/property-01/kitchen.jpeg",
+  "assets/images/properties/property-01/bedroom.jpeg",
+  "assets/images/properties/property-01/bathroom.jpeg",
+  "assets/images/properties/property-01/additional-space.jpeg"
 ];
 
 // Add each real location image path here. Replace this map with the image URL
@@ -226,9 +286,9 @@ const NEXORA_LOCATION_IMAGES = {
 // Use paths relative to the page that renders the image, or backend URLs later.
 const NEXORA_MEDIA_IMAGES = {
   hero: "assets/images/hero/hero-property.jpeg",
-  aboutHero: "", // Add: assets/images/about/about-hero.jpeg
-  aboutStory: "", // Add: assets/images/about/about-story.jpeg
-  authVisual: "", // Add: assets/images/hero/auth-visual.jpeg
+  aboutHero: "assets/images/about/about-hero.jpg", 
+  aboutStory: "assets/images/about/about-story.jpg", 
+  authVisual: "assets/images/about/auth.jpg", 
   agentPhotos: "assets/images/agents/",
   testimonialAvatars: "assets/images/testimonials/",
   propertyPhotos: "assets/images/properties/",
@@ -374,8 +434,42 @@ function getAgentById(agentId) {
   return NEXORA_AGENTS.find((agent) => agent.id === agentId) || null;
 }
 
+function getAssetPath(path) {
+  if (!path) return "";
+  return window.location.pathname.includes("/dashboard/") && path.startsWith("assets/")
+    ? `../${path}`
+    : path;
+}
+
+function getPublicProperties() {
+  let dashboardListings = [];
+
+  try {
+    const raw = localStorage.getItem("nexora_dashboard_listings");
+    dashboardListings = raw ? JSON.parse(raw) : [];
+  } catch (error) {
+    console.warn("Could not read published dashboard listings:", error);
+  }
+
+  const publishedListings = dashboardListings
+    .filter((listing) => listing.status === "published")
+    .map((listing) => ({
+      ...listing,
+      agent: listing.agent || "a001",
+      images: Array.isArray(listing.images) && listing.images.length
+        ? listing.images.map((path) => path.replace("assets/images/properties/new-listing/", "assets/images/properties/property-01/").replace(/\.jpg$/i, ".jpeg"))
+        : [...NEXORA_DEFAULT_PROPERTY_IMAGES]
+    }));
+  const dashboardIds = new Set(publishedListings.map((listing) => listing.id));
+
+  return [
+    ...NEXORA_PROPERTIES.filter((property) => !dashboardIds.has(property.id)),
+    ...publishedListings
+  ];
+}
+
 function getPropertyById(propertyId) {
-  return NEXORA_PROPERTIES.find((property) => property.id === propertyId) || null;
+  return getPublicProperties().find((property) => property.id === propertyId) || null;
 }
 
 /**

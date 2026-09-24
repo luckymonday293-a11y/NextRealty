@@ -193,7 +193,10 @@ function renderAgent(property) {
   agentEl.innerHTML = `
     <a href="agent-profile.html?id=${agent.id}" class="agent-mini-photo">
       <!-- Replace with real agent photo: ${agent.photo} -->
-      <div class="img-placeholder"><span>${initials}</span></div>
+      <div class="img-placeholder">
+        <img src="${getAssetPath(agent.photo)}" alt="${agent.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <span style="display:none;">${initials}</span>
+      </div>
     </a>
     <div class="agent-mini-body">
       <h3 class="agent-mini-name"><a href="agent-profile.html?id=${agent.id}">${agent.name}</a></h3>
@@ -291,12 +294,12 @@ function renderSimilarProperties(property) {
   if (!grid) return;
 
   const sameDistrict = getDistrictName(property.location);
-  let similar = NEXORA_PROPERTIES.filter(
+  let similar = getPublicProperties().filter(
     (p) => p.id !== property.id && (p.type === property.type || getDistrictName(p.location) === sameDistrict)
   );
 
   if (similar.length < 3) {
-    const fallback = NEXORA_PROPERTIES.filter((p) => p.id !== property.id && !similar.includes(p));
+    const fallback = getPublicProperties().filter((p) => p.id !== property.id && !similar.includes(p));
     similar = similar.concat(fallback);
   }
 
@@ -317,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // No id at all (e.g. a bare preview visit) falls back to a sample
   // property; an id that's present but doesn't match anything is a real
   // "not found" case.
-  const property = requestedId ? getPropertyById(requestedId) : NEXORA_PROPERTIES[0];
+  const property = requestedId ? getPropertyById(requestedId) : getPublicProperties()[0];
 
   if (!property) {
     renderNotFound();

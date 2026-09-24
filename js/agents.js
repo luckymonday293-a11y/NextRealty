@@ -30,7 +30,7 @@ function getFilteredAgents() {
 
 function sortAgents(list) {
   const sorted = [...list];
-  const listingsCount = (agent) => NEXORA_PROPERTIES.filter((p) => p.agent === agent.id).length;
+  const listingsCount = (agent) => getPublicProperties().filter((p) => p.agent === agent.id).length;
 
   switch (agentSort) {
     case "experience":
@@ -203,8 +203,10 @@ function renderAgentHeader(agent) {
   const photoEl = document.querySelector("[data-agent-photo]");
   if (photoEl) {
     photoEl.innerHTML = `
-      <!-- Replace with real agent photo: ${agent.photo} -->
-      <div class="img-placeholder"><span>${initials}</span></div>
+      <div class="img-placeholder">
+        <img src="${getAssetPath(agent.photo)}" alt="${agent.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <span style="display:none;">${initials}</span>
+      </div>
     `;
   }
 
@@ -236,7 +238,7 @@ function renderAgentListings(agent) {
   const emptyState = document.querySelector("[data-agent-listings-empty]");
   if (!grid) return;
 
-  const listings = NEXORA_PROPERTIES.filter((p) => p.agent === agent.id);
+  const listings = getPublicProperties().filter((p) => p.agent === agent.id);
 
   if (listings.length === 0) {
     grid.hidden = true;

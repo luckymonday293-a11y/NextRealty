@@ -409,11 +409,30 @@ textarea:focus-visible {
   color: var(--color-text-secondary);
   transition: color var(--transition-fast);
   position: relative;
+  padding-block: 8px;
+}
+
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease;
 }
 
 .navbar-link:hover,
 .navbar-link.is-active {
   color: var(--color-primary);
+}
+
+.navbar-link:hover::after,
+.navbar-link.is-active::after {
+  transform: scaleX(1);
 }
 
 .navbar-actions {
@@ -504,6 +523,18 @@ textarea:focus-visible {
 
 .navbar-mobile .navbar-link {
   padding: 10px 4px;
+  border-left: 2px solid transparent;
+  transition: color var(--transition-fast), background-color 220ms ease, border-color 220ms ease;
+}
+
+.navbar-mobile .navbar-link::after {
+  display: none;
+}
+
+.navbar-mobile .navbar-link.is-active {
+  padding-left: 12px;
+  border-left-color: currentColor;
+  background: rgba(39, 126, 98, 0.1);
 }
 
 @media (min-width: 1024px) {

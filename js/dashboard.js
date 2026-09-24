@@ -300,14 +300,8 @@ function collectPropertyFormData(form) {
     area: Number(fd.get("area")) || 0,
     description: fd.get("description") || "",
     amenities,
-    images: [
-      "assets/images/properties/new-listing/exterior.jpg",
-      "assets/images/properties/new-listing/living-room.jpg",
-      "assets/images/properties/new-listing/kitchen.jpg",
-      "assets/images/properties/new-listing/bedroom.jpg",
-      "assets/images/properties/new-listing/bathroom.jpg",
-      "assets/images/properties/new-listing/additional-space.jpg"
-    ]
+    agent: "a001",
+    images: [...NEXORA_DEFAULT_PROPERTY_IMAGES]
   };
 }
 
