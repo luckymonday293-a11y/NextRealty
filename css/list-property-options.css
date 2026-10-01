@@ -1,0 +1,179 @@
+/* ==========================================================================
+   NEXORA REALTY — PROPERTY LISTING OPTIONS
+   Uses shared tokens and components from global.css.
+   ========================================================================== */
+
+.listing-options-header {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-3);
+}
+
+.listing-options-header .eyebrow {
+  margin-top: var(--space-2);
+}
+
+.listing-options-header .page-heading {
+  max-width: 720px;
+}
+
+.listing-options-section {
+  padding-bottom: var(--space-5);
+}
+
+.listing-options-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.listing-option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.listing-option-card--agent {
+  border-top-color: var(--color-accent);
+}
+
+.listing-option-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--color-primary);
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.listing-option-card--agent .listing-option-number {
+  background: rgba(217, 119, 6, 0.12);
+  color: var(--color-accent);
+}
+
+.listing-option-label {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.listing-option-title {
+  margin-top: 4px;
+  font-size: var(--fs-card-title);
+}
+
+.listing-option-description {
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+}
+
+.listing-option-notice {
+  display: flex;
+  align-items: center;
+  min-height: 82px;
+  margin-top: var(--space-3);
+  padding: 12px 14px;
+  border-left: 3px solid var(--color-primary);
+  background: rgba(15, 118, 110, 0.07);
+  color: var(--color-text);
+  font-size: var(--fs-small);
+}
+
+.listing-option-notice--agent {
+  border-left-color: var(--color-accent);
+  background: rgba(217, 119, 6, 0.08);
+}
+
+.listing-option-action {
+  width: 100%;
+  margin-top: 20px;
+  padding-top: var(--space-3);
+}
+
+.listing-option-action span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.listing-benefits {
+  padding-top: var(--space-4);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.listing-benefits .section-header {
+  margin-bottom: var(--space-3);
+}
+
+.listing-benefits .section-heading {
+  font-size: 30px;
+}
+
+.listing-benefits-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px var(--space-3);
+  max-width: 920px;
+  margin-inline: auto;
+}
+
+.listing-benefits-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: var(--color-text-secondary);
+}
+
+.listing-benefit-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .listing-options-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .listing-option-card {
+    padding: var(--space-4);
+  }
+
+  .listing-option-action {
+    width: 100%;
+  }
+
+  .listing-benefits-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 359px) {
+  .listing-option-card {
+    padding: var(--space-2);
+  }
+
+  .listing-option-action {
+    white-space: normal;
+  }
+}

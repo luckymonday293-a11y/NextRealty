@@ -181,7 +181,6 @@ function initLoginForm() {
         showFormError(form, "Incorrect password. Please try again.");
         return;
       }
-
       createSession(account, remember);
       const successEl = document.querySelector("[data-login-success]");
       if (successEl) {
@@ -189,7 +188,10 @@ function initLoginForm() {
         successEl.hidden = false;
       }
       setTimeout(() => {
-        window.location.href = "../dashboard/index.html";
+        const isPublishingListing = new URLSearchParams(window.location.search).get("intent") === "publish-listing";
+        window.location.href = isPublishingListing
+          ? "../dashboard/add-property.html?publishPending=1"
+          : "../dashboard/index.html";
       }, 900);
     });
   });
@@ -225,13 +227,34 @@ function initForgotPassword() {
   });
 
   const forgotForm = document.querySelector("[data-forgot-form]");
-  forgotForm?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formEl = document.querySelector("[data-forgot-form-wrap]");
-    const successEl = document.querySelector("[data-forgot-success]");
-    if (formEl) formEl.hidden = true;
-    if (successEl) successEl.hidden = false;
-  });
+
+forgotForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const emailInput = forgotForm.querySelector('input[type="email"]');
+  const email = emailInput.value.trim();
+
+  // Email regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!email) {
+    alert("Please enter your email address.");
+    emailInput.focus();
+    return;
+  }
+
+  if (!emailRegex.test(email)) {
+    alert("Please enter a valid email address.");
+    emailInput.focus();
+    return;
+  }
+
+  const formEl = document.querySelector("[data-forgot-form-wrap]");
+  const successEl = document.querySelector("[data-forgot-success]");
+
+  if (formEl) formEl.hidden = true;
+  if (successEl) successEl.hidden = false;
+});
 }
 
 /* ==========================================================================
@@ -241,6 +264,14 @@ function initForgotPassword() {
 function initSignupForm() {
   const form = document.querySelector("[data-signup-form]");
   if (!form) return;
+
+  const isPublishingListing = new URLSearchParams(window.location.search).get("intent") === "publish-listing";
+  if (isPublishingListing) {
+    const subtext = document.querySelector("[data-signup-subtext]");
+    if (subtext) subtext.textContent = "Create an account to manage your listing and publish it.";
+    const loginLink = document.querySelector("[data-signup-login-link]");
+    if (loginLink) loginLink.href = "login.html?intent=publish-listing";
+  }
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -262,7 +293,39 @@ function initSignupForm() {
     if (password !== confirmPassword) {
       showFormError(form, "Passwords do not match.");
       return;
+    
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!name?.trim()) {
+  showFormError(form, "Please enter your full name.");
+  return;
+}
+
+if (!email?.trim()) {
+  showFormError(form, "Please enter your email address.");
+  return;
+}
+
+if (!emailRegex.test(email)) {
+  showFormError(form, "Please enter a valid email address.");
+  return;
+}
+
+if (!phone?.trim()) {
+  showFormError(form, "Please enter your phone number.");
+  return;
+}
+
+if (!password) {
+  showFormError(form, "Please enter a password.");
+  return;
+}
+
+if (password.length < 8) {
+  showFormError(form, "Password must be at least 8 characters long.");
+  return;
+}
     if (findAccountByEmail(email)) {
       showFormError(form, "An account with that email already exists. Try signing in instead.");
       return;
@@ -276,9 +339,15 @@ function initSignupForm() {
       if (successEl) {
         form.hidden = true;
         successEl.hidden = false;
+        if (isPublishingListing) {
+          const message = successEl.querySelector("p");
+          if (message) message.textContent = "Your account is ready. Publishing your listing now...";
+        }
       }
       setTimeout(() => {
-        window.location.href = "../dashboard/index.html";
+        window.location.href = isPublishingListing
+          ? "../dashboard/add-property.html?publishPending=1"
+          : "../dashboard/index.html";
       }, 900);
     });
   });

@@ -25,6 +25,7 @@ const AMENITY_OPTIONS = [
   "Borehole"
 ];
 
+const PENDING_LISTING_PUBLISH_KEY = "nexora_pending_listing_publish";
 const DEMO_PERSONA = { name: "Amaka Chukwu", email: "demo@nexorarealty.com", role: "agent" };
 
 /**
@@ -345,6 +346,25 @@ function initPropertyForm() {
 
   initImageInput(form);
 
+  const params = new URLSearchParams(window.location.search);
+  if (mode === "add" && params.get("publishPending") === "1" && getSession()) {
+    try {
+      const pendingListing = JSON.parse(sessionStorage.getItem(PENDING_LISTING_PUBLISH_KEY) || "null");
+      if (pendingListing) {
+        fillFormFromListing(form, pendingListing);
+        renderAmenityCheckboxes(amenitiesContainer, pendingListing.amenities || []);
+        sessionStorage.removeItem(PENDING_LISTING_PUBLISH_KEY);
+        const data = { ...pendingListing, status: "published" };
+        createDashboardListing(data);
+        window.location.href = "properties.html";
+        return;
+      }
+    } catch (error) {
+      console.warn("Could not restore the pending listing:", error);
+      showFormError(form, "Your account is ready, but the listing could not be restored. Please enter the details again.");
+    }
+  }
+
   function persistAndRedirect(status) {
     const data = collectPropertyFormData(form);
     data.status = status;
@@ -355,6 +375,25 @@ function initPropertyForm() {
       createDashboardListing(data);
     }
     window.location.href = "properties.html";
+  }
+
+  function requestPublish() {
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    if (mode === "add" && !getSession()) {
+      try {
+        sessionStorage.setItem(PENDING_LISTING_PUBLISH_KEY, JSON.stringify(collectPropertyFormData(form)));
+        window.location.href = "../auth/signup.html?intent=publish-listing";
+      } catch (error) {
+        showFormError(form, "We couldn't save your listing for sign-up. Please try again.");
+      }
+      return;
+    }
+
+    persistAndRedirect("published");
   }
 
   form.querySelector("[data-save-draft]")?.addEventListener("click", () => {
@@ -368,13 +407,7 @@ function initPropertyForm() {
     persistAndRedirect("draft");
   });
 
-  form.querySelector("[data-publish]")?.addEventListener("click", () => {
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    persistAndRedirect("published");
-  });
+  form.querySelector("[data-publish]")?.addEventListener("click", requestPublish);
 
   form.querySelector("[data-preview]")?.addEventListener("click", () => {
     renderPropertyPreview(collectPropertyFormData(form));
@@ -392,7 +425,7 @@ function initPropertyForm() {
       form.reportValidity();
       return;
     }
-    persistAndRedirect("published");
+    requestPublish();
   });
 }
 
