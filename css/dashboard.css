@@ -336,6 +336,19 @@
   transition: background var(--transition-fast);
 }
 
+.dashboard-mini-image {
+  width: 64px;
+  height: 48px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.dashboard-mini-row > div:first-of-type {
+  min-width: 0;
+  flex: 1;
+}
+
 .dashboard-mini-row:last-child {
   border-bottom: none;
 }

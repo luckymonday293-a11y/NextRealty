@@ -1,9 +1,8 @@
 /* ==========================================================================
    NEXORA REALTY — DATA LAYER
-   Sample in-memory data standing in for a future API/backend.
-   Replace NEXORA_PROPERTIES / NEXORA_AGENTS with fetch() calls once a
-   backend exists — every other script only reads from these two arrays,
-   so that's the one place a real integration needs to change.
+   Sample property and agent data plus the shared localStorage listing
+   catalog. Published user listings are merged with the sample properties
+   so the public pages all use the same property lookup.
    ========================================================================== */
 
 const NEXORA_PROPERTIES = [
@@ -250,23 +249,14 @@ const NEXORA_PROPERTIES = [
     views: 132,
     agent: "a002",
     images: [
-      "assets/images/properties/property-07/exterior.jpeg",
-      "assets/images/properties/property-07/living-room.jpeg",
-      "assets/images/properties/property-07/kitchen.jpeg",
-      "assets/images/properties/property-07/bedroom.jpeg",
-      "assets/images/properties/property-07/bathroom.jpeg",
-      "assets/images/properties/property-07/additional-space.jpeg"
+      "assets/images/properties/property-04/exterior.jpeg",
+      "assets/images/properties/property-04/living-room.jpeg",
+      "assets/images/properties/property-04/kitchen.jpeg",
+      "assets/images/properties/property-04/bedroom.jpeg",
+      "assets/images/properties/property-04/bathroom.jpeg",
+      "assets/images/properties/property-04/additional-space.jpeg"
     ]
   },
-];
-
-const NEXORA_DEFAULT_PROPERTY_IMAGES = [
-  "assets/images/properties/property-01/exterior.jpeg",
-  "assets/images/properties/property-01/living-room.jpeg",
-  "assets/images/properties/property-01/kitchen.jpeg",
-  "assets/images/properties/property-01/bedroom.jpeg",
-  "assets/images/properties/property-01/bathroom.jpeg",
-  "assets/images/properties/property-01/additional-space.jpeg"
 ];
 
 // Add each real location image path here. Replace this map with the image URL
@@ -447,23 +437,34 @@ function getPublicProperties() {
   try {
     const raw = localStorage.getItem("nexora_dashboard_listings");
     dashboardListings = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(dashboardListings)) dashboardListings = [];
   } catch (error) {
     console.warn("Could not read published dashboard listings:", error);
   }
 
   const publishedListings = dashboardListings
-    .filter((listing) => listing.status === "published")
+    .filter((listing) => listing && listing.status === "published" && typeof listing.id === "string")
     .map((listing) => ({
       ...listing,
-      agent: listing.agent || "a001",
-      images: Array.isArray(listing.images) && listing.images.length
-        ? listing.images.map((path) => path.replace("assets/images/properties/new-listing/", "assets/images/properties/property-01/").replace(/\.jpg$/i, ".jpeg"))
-        : [...NEXORA_DEFAULT_PROPERTY_IMAGES]
+      listedByRole: listing.listedByRole === "owner" ? "owner" : "agent",
+      views: Number(listing.views) || 0,
+      amenities: Array.isArray(listing.amenities) ? listing.amenities : [],
+      images: Array.isArray(listing.images)
+        ? listing.images.filter((image) => typeof image === "string")
+        : []
     }));
   const dashboardIds = new Set(publishedListings.map((listing) => listing.id));
 
   return [
-    ...NEXORA_PROPERTIES.filter((property) => !dashboardIds.has(property.id)),
+    ...NEXORA_PROPERTIES
+      .filter((property) => !dashboardIds.has(property.id))
+      .map((property) => ({
+        ...property,
+        listedByRole: property.listedByRole || "agent",
+        amenities: Array.isArray(property.amenities) ? property.amenities : [],
+        images: Array.isArray(property.images) ? property.images : [],
+        views: Number(property.views) || 0
+      })),
     ...publishedListings
   ];
 }

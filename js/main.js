@@ -160,6 +160,25 @@ function typeIcon(type) {
   return (TYPE_META[type] && TYPE_META[type].icon) || "&#127968;";
 }
 
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function propertyPublisherLabel(property) {
+  if (property.listedByRole === "owner") {
+    return property.accountName
+      ? `Owner: ${escapeHTML(property.accountName)}`
+      : "Listed by Owner";
+  }
+  return property.listedByRole === "agent" ? "Listed by Agent" : "";
+}
+
 /* ---------- Homepage renderers ----------
    These only run if the target containers exist, so main.js stays safe to
    load on every page even though this markup only lives on index.html. */
@@ -172,8 +191,10 @@ function propertyCardMarkup(property, options = {}) {
   const featuredBadge = property.featured
     ? '<span class="badge badge-featured">Featured</span>'
     : "";
+  const publisherLabel = propertyPublisherLabel(property);
+  const listedByBadge = publisherLabel ? `<span class="badge">${publisherLabel}</span>` : "";
   const priceSuffix = property.listingType === "rent" ? " / year" : "";
-  const primaryImage = property.images?.[0] || NEXORA_DEFAULT_PROPERTY_IMAGES[0];
+  const primaryImage = property.images?.[0] || "";
   const imagePath = getAssetPath(primaryImage);
 
   const compareToggle = options.showCompare
@@ -192,16 +213,16 @@ function propertyCardMarkup(property, options = {}) {
   return `
     <article class="property-card card card-hover">
       <a href="property-details.html?id=${property.id}" class="property-card-media">
-        <!-- Replace this placeholder with the property's exterior photo: ${imagePath} -->
         <div class="img-placeholder">
-  <img
-    src="${imagePath}"
-    alt="${property.title}"
-    onerror="this.remove()"
-  />
-  <span>Photo coming soon</span>
-</div>
-        <div class="property-card-badges">${badge}${featuredBadge}</div>
+          ${imagePath ? `<img
+            src="${imagePath}"
+            alt="${property.title}"
+            onload="this.nextElementSibling.style.display='none'"
+            onerror="this.remove()"
+          />` : ""}
+          <span>Photo coming soon</span>
+        </div>
+        <div class="property-card-badges">${badge}${featuredBadge}${listedByBadge}</div>
         <button
           class="btn-icon property-card-fav"
           data-favorite-toggle="${property.id}"
@@ -235,12 +256,14 @@ function renderFeaturedProperties() {
   const grid = document.querySelector("[data-featured-properties]");
   if (!grid) return;
 
-  const properties = getPublicProperties();
-  const featured = [
-    ...properties.filter((property) => property.featured),
-    ...properties.filter((property) => !property.featured)
-  ];
-  grid.innerHTML = featured.slice(0, 6).map(propertyCardMarkup).join("");
+  const latestProperties = [...getPublicProperties()]
+    .sort((a, b) => {
+      const publishedAt = (property) =>
+        Date.parse(property.publishedAt || property.createdAt || property.updatedAt || "") || 0;
+      return publishedAt(b) - publishedAt(a);
+    })
+    .slice(0, 6);
+  grid.innerHTML = latestProperties.map(propertyCardMarkup).join("");
   initFavoriteButtons(grid);
 }
 
@@ -331,11 +354,15 @@ function renderTestimonials() {
 }
 
 function locationCardMarkup(district, count) {
-  const locationProperty = NEXORA_PROPERTIES.find(
+  const locationProperties = getPublicProperties().filter(
     (property) => getDistrictName(property.location) === district
   );
+  const locationProperty =
+    locationProperties.find((property) => property.images?.some((image) => image.startsWith("data:image/"))) ||
+    locationProperties.find((property) => property.images?.length);
+  const uploadedImage = locationProperty?.images?.find((image) => image.startsWith("data:image/"));
   const locationImage = getAssetPath(
-    NEXORA_LOCATION_IMAGES[district] || locationProperty?.images?.[0] || ""
+    uploadedImage || locationProperty?.images?.[0] || NEXORA_LOCATION_IMAGES[district] || ""
   );
 
   return `

@@ -12,6 +12,7 @@
  * human label "Living Room" for gallery captions and alt text.
  */
 function galleryLabelFromPath(path) {
+  if (path.startsWith("data:image/")) return "Property photo";
   const filename = path.split("/").pop().replace(/\.[a-z]+$/i, "");
   return filename
     .split("-")
@@ -28,6 +29,8 @@ function renderGallery(property) {
   galleryImages = property.images || [];
 
   const thumbsContainer = document.querySelector("[data-gallery-thumbs]");
+  const gallery = document.querySelector(".gallery");
+  if (gallery) gallery.hidden = galleryImages.length === 0;
   if (!thumbsContainer || galleryImages.length === 0) return;
 
   thumbsContainer.innerHTML = galleryImages
@@ -137,7 +140,9 @@ function renderHeader(property) {
         ? '<span class="badge badge-sale">For Sale</span>'
         : '<span class="badge badge-rent">For Rent</span>';
     const featuredBadge = property.featured ? '<span class="badge badge-featured">Featured</span>' : "";
-    badgesEl.innerHTML = listingBadge + featuredBadge;
+    const publisherLabel = propertyPublisherLabel(property);
+    const listedByBadge = publisherLabel ? `<span class="badge">${publisherLabel}</span>` : "";
+    badgesEl.innerHTML = listingBadge + featuredBadge + listedByBadge;
   }
 
   const breadcrumbTitle = document.querySelector("[data-breadcrumb-title]");
@@ -185,7 +190,40 @@ function renderDescriptionAndAmenities(property) {
 function renderAgent(property) {
   const agent = getAgentById(property.agent);
   const agentEl = document.querySelector("[data-agent-card]");
-  if (!agentEl || !agent) return;
+  if (!agentEl) return;
+
+  if (!agent) {
+    if (!property.accountName) return;
+    const isOwner = property.listedByRole === "owner";
+    const initials = property.accountName.split(" ").map((part) => part[0]).join("");
+    const email = property.accountEmail
+      ? `<a href="mailto:${escapeHTML(property.accountEmail)}">${escapeHTML(property.accountEmail)}</a>`
+      : "";
+    agentEl.innerHTML = `
+      <div class="agent-mini-photo">
+        <div class="img-placeholder"><span>${escapeHTML(initials)}</span></div>
+      </div>
+      <div class="agent-mini-body">
+        <h3 class="agent-mini-name">${escapeHTML(property.accountName)}</h3>
+        <span class="badge">${isOwner ? "Property Owner" : "Agent"}</span>
+        ${email ? `<p class="agent-mini-meta">${email}</p>` : ""}
+      </div>
+    `;
+
+    const whatsappBtn = document.querySelector("[data-whatsapp-agent]");
+    if (whatsappBtn) {
+      if (property.accountPhone) {
+        whatsappBtn.href = buildWhatsAppLink({
+          phone: property.accountPhone,
+          message: whatsAppMessageForProperty(property)
+        });
+        whatsappBtn.textContent = isOwner ? "WhatsApp Owner" : "WhatsApp Agent";
+      } else {
+        whatsappBtn.hidden = true;
+      }
+    }
+    return;
+  }
 
   const verifiedBadge = agent.verified ? '<span class="badge badge-verified">&#10003; Verified</span>' : "";
   const initials = agent.name.split(" ").map((n) => n[0]).join("");

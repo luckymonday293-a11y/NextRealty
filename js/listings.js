@@ -1,12 +1,10 @@
 /* ==========================================================================
    NEXORA REALTY — LISTINGS.JS
-   Data layer for the dashboard's "My Listings" — separate from the
-   buyer-facing NEXORA_PROPERTIES catalog in data.js. On first use, it
+   Data layer for the dashboard's "My Listings". On first use, it
    seeds itself with the demo agent's (Amaka Chukwu / a001) three existing
-   properties so the dashboard has something real to show, then behaves
-   as an independent, fully editable store from that point on. New
-   listings created through Add Property only exist here — this is a
-   frontend demo with no backend to publish them to the public catalog.
+   properties so the dashboard has something real to show, then stores
+   listings and drafts in localStorage. data.js merges published listings
+   into the public catalog, while drafts remain dashboard-only.
    Pure data functions only; dashboard.js handles all the rendering.
    ========================================================================== */
 

@@ -3,7 +3,7 @@
 A modern, premium, fully responsive real estate marketplace. Frontend-only
 (HTML5, CSS3, vanilla JavaScript), built so a backend/API can be dropped in
 later without restructuring the app — all data currently lives in
-`js/data.js` as sample arrays that stand in for future API responses.
+`js/data.js` and localStorage as sample arrays and user-created data.
 
 ## Status: Complete
 
@@ -18,7 +18,8 @@ profiles, about, auth (login/signup), and the full owner/agent dashboard.
   checkbox), agent cards, forms, password field/toggle, form-error banner,
   pagination, breadcrumb, shared detail-page patterns, skeleton loading,
   empty states, scroll-reveal, and image placeholders
-- `js/data.js` — shared sample data (8 properties, 3 agents, 6 agent
+- `js/data.js` — shared sample data and published localStorage listings
+  (3 agents, 6 agent
   reviews, 3 testimonials) and small helpers (`formatPrice`,
   `getAgentById`, `getPropertyById`, `getDistrictName`)
 - `js/favorites.js` — sitewide localStorage favorites (no login required)
@@ -44,8 +45,8 @@ profiles, about, auth (login/signup), and the full owner/agent dashboard.
   disappear immediately on un-save), a "select up to 3 to compare" bar,
   and a Recently Viewed section fed by the tracking in `favorites.js`
 - `compare.html` + `css/compare.css` + `js/compare.js` — side-by-side
-  comparison table (price, location, type, bedrooms, bathrooms, area, and
-  a deduplicated union of amenities with check/dash cells), reads
+  comparison table (price, location, listing role, type, bedrooms,
+  bathrooms, area, and a deduplicated union of amenities with check/dash cells), reads
   `?ids=p001,p002,p003` from the URL, lets you remove a column or add
   another, and scrolls horizontally *within* the table on mobile (sticky
   row-label column) rather than ever overflowing the page
@@ -76,9 +77,9 @@ profiles, about, auth (login/signup), and the full owner/agent dashboard.
     stacked cards on mobile, with Edit, quick-Publish (for drafts), and
     Delete (with confirmation)
   - **Add/Edit Property**: one shared form (title, price, type, listing
-    type, location, beds/baths/area, description, amenities, simulated
-    image upload) driving Save Draft, Preview (renders a real property
-    card inline before committing), and Publish
+    type, location, beds/baths/area, description, amenities, and uploaded
+    images saved in localStorage) driving Save Draft, Preview (renders a
+    real property card inline before committing), and Publish
   - **Inquiries**: status filter (All/New/Contacted/Closed) and an inline
     status-change dropdown per inquiry — genuinely connected to the
     buyer-facing inquiry form: submit an inquiry on any property owned by
@@ -86,15 +87,12 @@ profiles, about, auth (login/signup), and the full owner/agent dashboard.
     appears here immediately
   - **Profile**: editable contact details, pre-filled from the signed-in
     session when one exists
-  - The dashboard is fully explorable without signing in — a demo banner
-    explains you're viewing sample data as the demo agent persona, and
-    signing up/in seamlessly replaces that persona everywhere (sidebar,
-    stats, Profile) without needing to touch a single dashboard file
-  - Dashboard listings are seeded once (the demo agent's 3 existing
-    properties) into their own localStorage-backed store, independent of
-    the buyer-facing `NEXORA_PROPERTIES` catalog — new listings created
-    here are a genuine addition to *that* store, not published back to
-    the public site (there's no backend to do that safely)
+  - Users can create drafts without an account. Publish saves the draft
+    and images locally, requires sign-up/sign-in, then automatically
+    publishes the saved listing with the account's Owner or Agent role.
+    Published listings appear throughout the public property catalog.
+  - The dashboard remains explorable without signing in — a demo banner
+    explains you're viewing sample data as the demo agent persona.
 - `about.html` + `css/about.css` — reuses the homepage's hero, stats, and
   values-grid components directly (see `css/home.css`) rather than
   duplicating them; adds a two-column story section and a numbered
@@ -107,9 +105,8 @@ Everything the original spec asked for is here. If this became a real
 product, the natural next steps would be a backend (the localStorage
 layers in `favorites.js`, `inquiries.js`, `listings.js`, and `auth.js` are
 all written as thin wrappers specifically so each one is a small, isolated
-swap to real API calls), real image upload/storage, and connecting
-dashboard-published listings back into the public `properties.html`
-catalog.
+swap to real API calls) and moving locally stored image uploads to durable
+server-side storage.
 
 ## Design system reference
 

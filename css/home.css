@@ -85,6 +85,10 @@
   padding-block: 48px 40px;
 }
 
+.home-page .hero-inner {
+  flex: 0 0 auto;
+}
+
 .hero-title {
   max-width: 720px;
   font-size: clamp(42px, 7vw, 76px);
@@ -162,26 +166,23 @@
   border-color: #ffffff;
 }
 
-/* Search card overlaps the bottom edge of the hero for a premium, anchored feel */
+/* Compact search controls sit directly over the hero image. */
 .search-card {
   position: relative;
   z-index: 2;
-  margin: 0 0 0;
-  background: rgba(255, 255, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.62);
-  border-radius: 28px;
-  box-shadow: 0 20px 50px rgba(3, 17, 24, 0.24);
-  padding: 18px;
-  backdrop-filter: blur(18px) saturate(125%);
+  background: transparent;
+  padding: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
 }
 
 .search-card .form-label {
-  color: #68727d;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 600;
-  margin: 0 0 6px 12px;
+  line-height: 1.2;
+  margin-bottom: 4px;
 }
 
 .search-card .form-group {
@@ -192,13 +193,13 @@
 .search-card .form-input,
 .search-card .form-select {
   height: 42px;
+  width: 100%;
   padding: 9px 12px;
   color: var(--color-text);
-  background: rgba(255, 255, 255, 0.78);
-  border-color: rgba(255, 255, 255, 0.76);
-  border-radius: 14px;
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  border-radius: var(--radius-sm);
   text-align: left;
-  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
 .search-card .form-input::placeholder {
@@ -216,15 +217,17 @@
 }
 
 .search-submit {
-  width: 58px;
+  width: auto;
+  min-width: 112px;
   height: 42px;
-  padding: 10px;
-  border-radius: 14px;
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
   align-self: end;
   margin-bottom: 0;
   flex-shrink: 0;
 }
 
+/*
 .search-icon {
   position: relative;
   display: block;
@@ -258,6 +261,7 @@
   white-space: nowrap;
   border: 0;
 }
+  */
 
 @media (min-width: 768px) {
   .hero-title {
@@ -283,20 +287,20 @@
   }
 
   .search-card {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 58px;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) max-content;
     align-items: end;
-    margin-bottom: 0;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   .hero {
     min-height: 100svh;
     padding-block: 88px 20px;
   }
 
-  .hero-inner {
-    padding-block: 44px 28px;
+  .home-page .hero-inner {
+    flex: 0 0 auto;
+    padding-block: 16px 8px;
   }
 
   .hero-title {
@@ -317,25 +321,32 @@
   }
 
   .search-card {
-    border-radius: 24px;
-    padding: 16px;
-    margin-bottom: 0;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .search-submit {
     width: 100%;
-    grid-column: 1 / -1;
   }
+
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .search-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+  }
+
+  .search-submit {
+    width: 100%;
+  }
+
   .home-page .navbar-mobile,
   .about-page .navbar-mobile {
-    display: none;
+    display: flex;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   .home-page .navbar-mobile,
   .about-page .navbar-mobile {
     display: flex;

@@ -93,7 +93,13 @@ function createAccount({ name, email, phone, password, role }) {
  * of "Remember me" behavior rather than a purely decorative checkbox.
  */
 function createSession(account, remember) {
-  const session = { name: account.name, email: account.email, role: account.role };
+  const session = {
+    accountId: account.id,
+    name: account.name,
+    email: account.email,
+    phone: account.phone,
+    role: account.role
+  };
   const store = remember ? localStorage : sessionStorage;
   const other = remember ? sessionStorage : localStorage;
   store.setItem(SESSION_KEY, JSON.stringify(session));
@@ -108,7 +114,22 @@ function createSession(account, remember) {
 function getSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+
+    const session = JSON.parse(raw);
+    if (!session || typeof session !== "object") return null;
+    const account = session.accountId
+      ? getAccounts().find((item) => item.id === session.accountId)
+      : findAccountByEmail(session.email);
+
+    return {
+      ...session,
+      accountId: session.accountId || account?.id || null,
+      name: session.name || account?.name || "",
+      email: session.email || account?.email || "",
+      phone: session.phone || account?.phone || "",
+      role: session.role || account?.role || ""
+    };
   } catch (error) {
     console.warn("Could not read session from storage:", error);
     return null;
@@ -159,6 +180,11 @@ function withSimulatedDelay(button, loadingLabel, callback) {
 function initLoginForm() {
   const form = document.querySelector("[data-login-form]");
   if (!form) return;
+
+  if (new URLSearchParams(window.location.search).get("intent") === "publish-listing") {
+    const signupLink = document.querySelector("[data-login-signup-link]");
+    if (signupLink) signupLink.href = "signup.html?intent=publish-listing";
+  }
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();

@@ -96,13 +96,89 @@ function formatDashboardDate(isoDate) {
   return new Date(isoDate).toLocaleDateString("en-NG", { year: "numeric", month: "short", day: "numeric" });
 }
 
+function redirectToPublishLogin(pendingPublish, form = null) {
+  try {
+    localStorage.setItem(PENDING_LISTING_PUBLISH_KEY, JSON.stringify(pendingPublish));
+    window.location.href = "../auth/login.html?intent=publish-listing";
+  } catch (error) {
+    const message = "We couldn't save this listing for sign-in. Please try again.";
+    if (form) showFormError(form, message);
+    else window.alert(message);
+  }
+}
+
+function listingPublisherData(session) {
+  const linkedAgent = session.role === "agent" && typeof NEXORA_AGENTS !== "undefined"
+    ? NEXORA_AGENTS.find((agent) =>
+        agent.email?.toLowerCase() === session.email.toLowerCase() ||
+        agent.name.toLowerCase() === session.name.toLowerCase()
+      )
+    : null;
+
+  return {
+    status: "published",
+    listedByRole: session.role,
+    accountId: session.accountId,
+    accountName: session.name,
+    accountEmail: session.email,
+    accountPhone: session.phone || "",
+    ownerId: session.role === "owner" ? session.accountId : null,
+    agentId: session.role === "agent" ? session.accountId : null,
+    agent: linkedAgent?.id || null,
+    publishedAt: new Date().toISOString()
+  };
+}
+
+function readUploadedImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error(`Could not read ${file.name}.`));
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      if (!/^image\/(jpeg|png|webp)$/i.test(file.type)) {
+        resolve(dataUrl);
+        return;
+      }
+
+      const image = new Image();
+      image.onerror = () => resolve(dataUrl);
+      image.onload = () => {
+        const maxDimension = 1600;
+        const scale = Math.min(1, maxDimension / Math.max(image.naturalWidth, image.naturalHeight));
+        if (scale === 1 && file.size <= 350 * 1024) {
+          resolve(dataUrl);
+          return;
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        const context = canvas.getContext("2d");
+        if (!context) {
+          resolve(dataUrl);
+          return;
+        }
+
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
+      };
+      image.src = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 /* ==========================================================================
    OVERVIEW (dashboard/index.html)
    ========================================================================== */
 
 function listingRowCompactMarkup(listing) {
+  const image = listing.images?.[0] ? getAssetPath(listing.images[0]) : "";
   return `
     <a href="properties.html" class="dashboard-mini-row">
+      ${image ? `<img class="dashboard-mini-image" src="${image}" alt="${listing.title}" />` : ""}
       <div>
         <p class="dashboard-mini-title">${listing.title}</p>
         <p class="dashboard-mini-meta">${listing.location}</p>
@@ -172,11 +248,14 @@ function renderOverview() {
    ========================================================================== */
 
 function listingRowFullMarkup(listing) {
+  const image = listing.images?.[0] ? getAssetPath(listing.images[0]) : "";
   return `
     <div class="listing-row" data-listing-row="${listing.id}">
       <div class="listing-row-media">
-        <!-- Replace with the listing's primary photo: ${listing.images[0]} -->
-        <div class="img-placeholder"><span>Photo</span></div>
+        <div class="img-placeholder">
+          ${image ? `<img src="${image}" alt="${listing.title}" onload="this.nextElementSibling.style.display='none'" onerror="this.remove()" />` : ""}
+          <span>Photo</span>
+        </div>
       </div>
       <div class="listing-row-title">
         <p class="listing-row-name">${listing.title}</p>
@@ -227,7 +306,13 @@ function renderListingsPage() {
 
   list.querySelectorAll("[data-quick-publish]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      updateDashboardListing(btn.getAttribute("data-quick-publish"), { status: "published" });
+      const listingId = btn.getAttribute("data-quick-publish");
+      const session = getSession();
+      if (!session || !["owner", "agent"].includes(session.role)) {
+        redirectToPublishLogin({ action: "update", listingId, data: { status: "published" } });
+        return;
+      }
+      updateDashboardListing(listingId, { status: "published", listedByRole: session.role });
       renderListingsPage();
     });
   });
@@ -273,20 +358,60 @@ function fillFormFromListing(form, listing) {
   setValue("description", listing.description);
 }
 
-function initImageInput(form) {
+function initImageInput(form, existingImages = []) {
   const input = form.querySelector("[data-image-input]");
   const chips = form.querySelector("[data-image-chips]");
-  if (!input || !chips) return;
+  if (!input || !chips) return async () => [];
+
+  input.required = existingImages.length === 0;
+
+  let selectedImages = null;
+  let pendingRead = Promise.resolve();
+  let readFailed = false;
+
+  const renderChips = (labels) => {
+    chips.replaceChildren(...labels.map((label) => {
+      const chip = document.createElement("span");
+      chip.className = "image-chip";
+      chip.textContent = label;
+      return chip;
+    }));
+  };
+
+  if (existingImages.length) {
+    renderChips(existingImages.map((image, index) => {
+      if (image.startsWith("data:")) return `Current photo ${index + 1}`;
+      return image.split("/").pop();
+    }));
+  }
 
   input.addEventListener("change", () => {
-    const names = Array.from(input.files).map((file) => file.name);
-    chips.innerHTML = names.length
-      ? names.map((name) => `<span class="image-chip">${name}</span>`).join("")
-      : "";
+    const files = Array.from(input.files || []);
+    if (!files.length) return;
+
+    selectedImages = null;
+    readFailed = false;
+    renderChips(files.map((file) => file.name));
+    pendingRead = Promise.all(files.map(readUploadedImage))
+      .then((images) => {
+        selectedImages = images;
+        hideFormError(form);
+      })
+      .catch((error) => {
+        readFailed = true;
+        showFormError(form, error.message || "Could not read the selected images.");
+      });
   });
+
+  return async () => {
+    await pendingRead;
+    if (readFailed) throw new Error("Could not read the selected images.");
+    if (selectedImages?.length) return [...selectedImages];
+    return [...existingImages];
+  };
 }
 
-function collectPropertyFormData(form) {
+function collectPropertyFormData(form, images) {
   const fd = new FormData(form);
   const amenities = Array.from(form.querySelectorAll('input[name="amenities"]:checked')).map((cb) => cb.value);
 
@@ -301,8 +426,7 @@ function collectPropertyFormData(form) {
     area: Number(fd.get("area")) || 0,
     description: fd.get("description") || "",
     amenities,
-    agent: "a001",
-    images: [...NEXORA_DEFAULT_PROPERTY_IMAGES]
+    images: [...images]
   };
 }
 
@@ -344,59 +468,105 @@ function initPropertyForm() {
     renderAmenityCheckboxes(amenitiesContainer, []);
   }
 
-  initImageInput(form);
+  const getFormImages = initImageInput(form, existingListing?.images || []);
+  const collectCurrentFormData = async () => collectPropertyFormData(form, await getFormImages());
+  let draftListingId = existingListing?.id || null;
 
   const params = new URLSearchParams(window.location.search);
   if (mode === "add" && params.get("publishPending") === "1" && getSession()) {
     try {
-      const pendingListing = JSON.parse(sessionStorage.getItem(PENDING_LISTING_PUBLISH_KEY) || "null");
-      if (pendingListing) {
-        fillFormFromListing(form, pendingListing);
-        renderAmenityCheckboxes(amenitiesContainer, pendingListing.amenities || []);
-        sessionStorage.removeItem(PENDING_LISTING_PUBLISH_KEY);
-        const data = { ...pendingListing, status: "published" };
-        createDashboardListing(data);
-        window.location.href = "properties.html";
-        return;
+      const pendingListing = JSON.parse(localStorage.getItem(PENDING_LISTING_PUBLISH_KEY) || "null");
+      if (!pendingListing) throw new Error("The listing draft could not be found.");
+      const listing = getDashboardListingById(pendingListing.listingId);
+      const session = getSession();
+      if (!listing) throw new Error("The saved listing draft could not be found.");
+      if (!session || !["owner", "agent"].includes(session.role)) {
+        throw new Error("Please sign in with an owner or agent account to publish this listing.");
       }
+
+      const updatedListing = updateDashboardListing(listing.id, {
+        ...(pendingListing.action === "update" ? pendingListing.data : {}),
+        ...listingPublisherData(session)
+      });
+      if (!updatedListing) throw new Error("The saved listing draft could not be published.");
+      localStorage.removeItem(PENDING_LISTING_PUBLISH_KEY);
+      window.location.href = "properties.html";
+      return;
     } catch (error) {
       console.warn("Could not restore the pending listing:", error);
-      showFormError(form, "Your account is ready, but the listing could not be restored. Please enter the details again.");
+      showFormError(form, error.name === "QuotaExceededError"
+        ? "Your account is ready, but the listing could not be published because browser storage is full."
+        : error.message || "Your account is ready, but the listing could not be restored. Please try again.");
     }
   }
 
-  function persistAndRedirect(status) {
-    const data = collectPropertyFormData(form);
-    data.status = status;
+  async function persistAndRedirect(status, submittedData = null) {
+    try {
+      const data = submittedData || await collectCurrentFormData();
+      data.status = status;
+      if (status === "published") {
+        const session = getSession();
+        if (!session || !["owner", "agent"].includes(session.role)) {
+          showFormError(form, "Please sign in with an owner or agent account to publish this listing.");
+          return;
+        }
+        Object.assign(data, listingPublisherData(session));
+      }
 
-    if (mode === "edit" && existingListing) {
-      updateDashboardListing(existingListing.id, data);
-    } else {
-      createDashboardListing(data);
+      if (draftListingId) {
+        updateDashboardListing(draftListingId, data);
+      } else {
+        draftListingId = createDashboardListing(data).id;
+      }
+      window.location.href = "properties.html";
+    } catch (error) {
+      showFormError(
+        form,
+        error.name === "QuotaExceededError"
+          ? "These images exceed available browser storage. Choose fewer or smaller images and try again."
+          : error.message || "We couldn't save this listing. Please try again."
+      );
     }
-    window.location.href = "properties.html";
   }
 
-  function requestPublish() {
+  async function requestPublish() {
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    if (mode === "add" && !getSession()) {
+    let data;
+    try {
+      data = await collectCurrentFormData();
+    } catch (error) {
+      showFormError(form, error.message || "Could not load the selected images.");
+      return;
+    }
+
+    if (!getSession()) {
       try {
-        sessionStorage.setItem(PENDING_LISTING_PUBLISH_KEY, JSON.stringify(collectPropertyFormData(form)));
-        window.location.href = "../auth/signup.html?intent=publish-listing";
+        data.status = "draft";
+        const savedListing = draftListingId
+          ? updateDashboardListing(draftListingId, data)
+          : createDashboardListing(data);
+        if (!savedListing) throw new Error("We couldn't save this listing draft. Please try again.");
+        draftListingId = savedListing.id;
+        redirectToPublishLogin({ listingId: savedListing.id }, form);
       } catch (error) {
-        showFormError(form, "We couldn't save your listing for sign-up. Please try again.");
+        showFormError(
+          form,
+          error.name === "QuotaExceededError"
+            ? "These images exceed available browser storage. Choose fewer or smaller images and try again."
+            : error.message || "We couldn't save your listing for sign-in. Please try again."
+        );
       }
       return;
     }
 
-    persistAndRedirect("published");
+    await persistAndRedirect("published", data);
   }
 
-  form.querySelector("[data-save-draft]")?.addEventListener("click", () => {
+  form.querySelector("[data-save-draft]")?.addEventListener("click", async () => {
     const titleInput = form.querySelector('[name="title"]');
     if (!titleInput.value.trim()) {
       showFormError(form, "Give the listing a title before saving it as a draft.");
@@ -404,13 +574,17 @@ function initPropertyForm() {
       return;
     }
     hideFormError(form);
-    persistAndRedirect("draft");
+    await persistAndRedirect("draft");
   });
 
-  form.querySelector("[data-publish]")?.addEventListener("click", requestPublish);
+  form.querySelector("[data-publish]")?.addEventListener("click", () => requestPublish());
 
-  form.querySelector("[data-preview]")?.addEventListener("click", () => {
-    renderPropertyPreview(collectPropertyFormData(form));
+  form.querySelector("[data-preview]")?.addEventListener("click", async () => {
+    try {
+      renderPropertyPreview(await collectCurrentFormData());
+    } catch (error) {
+      showFormError(form, error.message || "Could not load the selected images.");
+    }
   });
 
   document.querySelector("[data-preview-back]")?.addEventListener("click", () => {
