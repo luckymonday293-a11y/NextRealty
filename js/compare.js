@@ -41,7 +41,7 @@ function compareColumnHeader(property) {
         class="compare-remove"
         data-compare-remove="${property.id}"
         aria-label="Remove ${property.title} from comparison"
-  >&times;</button>
+  >${lucideIcon("x")}</button>
   <a href="property-details.html?id=${property.id}" class="compare-col-media">
     ${image
       ? `<img src="${image}" alt="${property.title}" class="compare-property-image">`
@@ -56,7 +56,7 @@ function addSlotHeader() {
   return `
     <th class="compare-col compare-add-slot">
       <a href="favorites.html" class="compare-add-link">
-        <span aria-hidden="true">&#43;</span>
+        ${lucideIcon("plus")}
         Add Another Property
       </a>
     </th>
@@ -79,8 +79,8 @@ function amenityRow(amenity) {
   const cells = compareProperties
     .map((property) =>
       property.amenities.includes(amenity)
-        ? '<td class="has-amenity" aria-label="Included">&#10003;</td>'
-        : '<td class="no-amenity" aria-label="Not included">&#8212;</td>'
+        ? `<td class="has-amenity" aria-label="Included">${lucideIcon("check")}</td>`
+        : `<td class="no-amenity" aria-label="Not included">${lucideIcon("minus")}</td>`
     )
     .join("");
 
@@ -113,7 +113,7 @@ function comparePropertyCard(property) {
           class="compare-remove"
           data-compare-remove="${property.id}"
           aria-label="Remove ${property.title} from comparison"
-        >&times;</button>
+        >${lucideIcon("x")}</button>
       </div>
       <div class="compare-card-content">
         <a href="property-details.html?id=${property.id}" class="compare-card-title">${property.title}</a>
@@ -191,7 +191,7 @@ function renderCompareTable() {
   const amenityRows = amenitySet.map(amenityRow).join("");
   const mobileCards = compareProperties.map(comparePropertyCard).join("");
   const mobileAddLink = compareProperties.length < COMPARE_MAX
-    ? '<a href="favorites.html" class="compare-mobile-add-link"><span aria-hidden="true">&#43;</span> Add Another Property</a>'
+    ? `<a href="favorites.html" class="compare-mobile-add-link">${lucideIcon("plus")} Add Another Property</a>`
     : "";
 
   wrap.innerHTML = `

@@ -96,16 +96,10 @@
 }
 
 .google-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 22px;
   height: 22px;
-  border: 2px solid #4285f4;
-  border-radius: 50%;
-  color: #4285f4;
-  font-size: 14px;
-  font-weight: 700;
+  flex: 0 0 auto;
 }
 
 .auth-visual-side {
@@ -307,6 +301,14 @@
 
 .role-option-icon {
   font-size: 22px;
+}
+
+.role-option:nth-child(1) .role-option-icon {
+  color: #0f766e;
+}
+
+.role-option:nth-child(2) .role-option-icon {
+  color: #d97706;
 }
 
 .role-option-label {

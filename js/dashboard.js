@@ -271,7 +271,7 @@ function listingRowFullMarkup(listing) {
             ? `<button type="button" class="btn btn-primary btn-sm" data-quick-publish="${listing.id}">Publish</button>`
             : ""
         }
-        <button type="button" class="btn-icon listing-row-delete" data-delete-listing="${listing.id}" aria-label="Delete ${listing.title}">&#128465;</button>
+        <button type="button" class="btn-icon listing-row-delete" data-delete-listing="${listing.id}" aria-label="Delete ${listing.title}">${lucideIcon("trash-2")}</button>
       </div>
     </div>
   `;

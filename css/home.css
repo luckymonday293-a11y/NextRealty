@@ -383,6 +383,13 @@
   font-size: 32px;
 }
 
+.type-card:nth-child(6n + 1) .type-card-icon { color: #0f766e; }
+.type-card:nth-child(6n + 2) .type-card-icon { color: #2563eb; }
+.type-card:nth-child(6n + 3) .type-card-icon { color: #d97706; }
+.type-card:nth-child(6n + 4) .type-card-icon { color: #16a34a; }
+.type-card:nth-child(6n + 5) .type-card-icon { color: #db2777; }
+.type-card:nth-child(6n + 6) .type-card-icon { color: #475569; }
+
 .type-card-label {
   font-weight: 600;
 }

@@ -140,16 +140,60 @@ function whatsAppMessageForProperty(property) {
   );
 }
 
+const LUCIDE_ICON_PATHS = {
+  "arrow-left": '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+  "arrow-right": '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  "badge-check": '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.77 4 4 0 0 1 0 6.76 4 4 0 0 1-4.78 4.77 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>',
+  bath: '<path d="M9 6 6.5 3.5a2.12 2.12 0 0 0-3 3L6 9"/><path d="M10 5 8 7"/><path d="M2 12h20"/><path d="M7 12v4a5 5 0 0 0 10 0v-4"/><path d="M5 21v-2"/><path d="M19 21v-2"/>',
+  bed: '<path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/><path d="M6 12h4"/>',
+  building: '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',
+  "building-2": '<path d="M6 22V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v19"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 8h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/>',
+  "chart-no-axes-column": '<path d="M5 21v-6"/><path d="M12 21V3"/><path d="M19 21V9"/>',
+  check: '<path d="m20 6-11 11-5-5"/>',
+  "chevron-down": '<path d="m6 9 6 6 6-6"/>',
+  "chevron-left": '<path d="m15 18-6-6 6-6"/>',
+  "chevron-right": '<path d="m9 18 6-6-6-6"/>',
+  eye: '<path d="M2.06 12.34a1 1 0 0 1 0-.68 10 10 0 0 1 19.88 0 1 1 0 0 1 0 .68 10 10 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/>',
+  heart: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/>',
+  home: '<path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/>',
+  "tree-pine": '<path d="m17 14 3 5H4l3-5"/><path d="m15 8 3 5H6l3-5"/><path d="m12 2 3 5H9l3-5"/><path d="M12 19v3"/>',
+  mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+  "map-pin": '<path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+  "message-circle": '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  minus: '<path d="M5 12h14"/>',
+  plus: '<path d="M12 5v14"/><path d="M5 12h14"/>',
+  ruler: '<path d="M21.3 8.7 15.3 2.7a1 1 0 0 0-1.4 0L2.7 13.9a1 1 0 0 0 0 1.4l6 6a1 1 0 0 0 1.4 0L21.3 10.1a1 1 0 0 0 0-1.4Z"/><path d="m7.5 10.5 2 2M10.5 7.5l2 2M13.5 4.5l2 2M4.5 13.5l2 2"/>',
+  scale: '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 4-1 5-3h4c1 2 3 3 5 3h2"/>',
+  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>',
+  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+  star: '<path d="m12 3 2.8 5.67 6.26.91-4.53 4.42 1.07 6.24L12 17.29l-5.6 2.95 1.07-6.24L2.94 9.58l6.26-.91L12 3Z"/>',
+  "trash-2": '<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/>',
+  "user-round": '<circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/>',
+  "x": '<path d="m18 6-12 12"/><path d="m6 6 12 12"/>'
+};
+
+function lucideIcon(name, { filled = false } = {}) {
+  const paths = LUCIDE_ICON_PATHS[name];
+  if (!paths) return "";
+  return `<svg class="lucide-icon${filled ? " lucide-icon-filled" : ""}" viewBox="0 0 24 24" fill="${filled ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+}
+
+function ratingStarsMarkup(rating) {
+  return Array.from({ length: 5 }, (_, index) =>
+    lucideIcon("star", { filled: index < rating })
+  ).join("");
+}
+
 /* ---------- Property type metadata ----------
    Shared label/icon lookup for property.type, used on the specs bar
    (property-details.js) and the comparison table (compare.js). */
 const TYPE_META = {
-  house: { label: "House", icon: "&#127968;" },
-  apartment: { label: "Apartment", icon: "&#127970;" },
-  villa: { label: "Villa", icon: "&#127969;" },
-  land: { label: "Land", icon: "&#127793;" },
-  commercial: { label: "Commercial", icon: "&#127974;" },
-  office: { label: "Office", icon: "&#128188;" }
+  house: { label: "House", icon: "home" },
+  apartment: { label: "Apartment", icon: "building-2" },
+  villa: { label: "Villa", icon: "home" },
+  land: { label: "Land", icon: "tree-pine" },
+  commercial: { label: "Commercial", icon: "building" },
+  office: { label: "Office", icon: "building-2" }
 };
 
 function typeLabel(type) {
@@ -157,7 +201,7 @@ function typeLabel(type) {
 }
 
 function typeIcon(type) {
-  return (TYPE_META[type] && TYPE_META[type].icon) || "&#127968;";
+  return lucideIcon((TYPE_META[type] && TYPE_META[type].icon) || "home");
 }
 
 function escapeHTML(value) {
@@ -228,7 +272,7 @@ function propertyCardMarkup(property, options = {}) {
           data-favorite-toggle="${property.id}"
           aria-label="Save ${property.title} to favorites"
           aria-pressed="false"
-        >&#9825;</button>
+        >${lucideIcon("heart")}</button>
       </a>
       <div class="property-card-body">
         <p class="property-card-price">${formatPrice(property.price)}${priceSuffix}</p>
@@ -243,7 +287,7 @@ function propertyCardMarkup(property, options = {}) {
         </ul>
         <div class="property-card-footer-row">
           <a href="property-details.html?id=${property.id}" class="property-card-cta">
-            View Property <span aria-hidden="true">&rarr;</span>
+            View Property ${lucideIcon("arrow-right")}
           </a>
           ${compareToggle}
         </div>
@@ -269,7 +313,7 @@ function renderFeaturedProperties() {
 
 function agentCardMarkup(agent) {
   const verifiedBadge = agent.verified
-    ? '<span class="badge badge-verified">&#10003; Verified</span>'
+    ? `<span class="badge badge-verified">${lucideIcon("badge-check")} Verified</span>`
     : "";
 
   const listingsCount = getPublicProperties().filter(
@@ -307,11 +351,11 @@ function agentCardMarkup(agent) {
         </p>
 
         <p class="agent-card-rating">
-          &#9733; ${agent.rating.toFixed(1)} (${agent.reviewCount} reviews)
+          ${lucideIcon("star", { filled: true })} ${agent.rating.toFixed(1)} (${agent.reviewCount} reviews)
         </p>
 
         <a href="agent-profile.html?id=${agent.id}" class="agent-card-cta">
-          View Profile <span aria-hidden="true">&rarr;</span>
+          View Profile ${lucideIcon("arrow-right")}
         </a>
       </div>
     </article>

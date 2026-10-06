@@ -277,6 +277,21 @@
   margin-bottom: var(--space-2);
 }
 
+.stat-card:nth-child(3n + 1) .stat-card-icon {
+  color: #0f766e;
+  background: rgba(15, 118, 110, 0.1);
+}
+
+.stat-card:nth-child(3n + 2) .stat-card-icon {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.stat-card:nth-child(3n + 3) .stat-card-icon {
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.1);
+}
+
 .stat-card-value {
   font-size: 30px;
   font-weight: 700;

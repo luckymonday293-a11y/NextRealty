@@ -165,7 +165,7 @@ function formatReviewDate(isoDate) {
 }
 
 function reviewCardMarkup(review) {
-  const stars = "&#9733;".repeat(review.rating) + "&#9734;".repeat(5 - review.rating);
+  const stars = ratingStarsMarkup(review.rating);
   const initials = review.author.split(" ").map((n) => n[0]).join("");
 
   return `
@@ -196,7 +196,10 @@ function renderAgentHeader(agent) {
 
   setText("[data-agent-name]", agent.name);
   setText("[data-agent-experience]", `${agent.experienceYears} years experience`);
-  setText("[data-agent-rating]", `★ ${stats.rating.toFixed(1)} (${stats.count} reviews)`);
+  const ratingEl = document.querySelector("[data-agent-rating]");
+  if (ratingEl) {
+    ratingEl.innerHTML = `${lucideIcon("star", { filled: true })} ${stats.rating.toFixed(1)} (${stats.count} reviews)`;
+  }
   setText("[data-agent-about]", agent.about);
   setText("[data-breadcrumb-agent-name]", agent.name);
 
@@ -213,7 +216,7 @@ function renderAgentHeader(agent) {
   const verifiedEl = document.querySelector("[data-agent-verified]");
   if (verifiedEl) {
     verifiedEl.innerHTML = agent.verified
-      ? '<span class="badge badge-verified">&#10003; Verified Agent</span>'
+      ? `<span class="badge badge-verified">${lucideIcon("badge-check")} Verified Agent</span>`
       : "";
   }
 

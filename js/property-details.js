@@ -126,7 +126,10 @@ function renderHeader(property) {
   };
 
   setText("[data-property-title]", property.title);
-  setText("[data-property-location]", property.location);
+  const locationEl = document.querySelector("[data-property-location]");
+  if (locationEl) {
+    locationEl.innerHTML = `${lucideIcon("map-pin")} ${escapeHTML(property.location)}`;
+  }
   setText(
     "[data-property-price]",
     formatPrice(property.price) + (property.listingType === "rent" ? " / year" : "")
@@ -154,17 +157,17 @@ function renderSpecs(property) {
   if (!specsEl) return;
 
   const specs = [
-    property.bedrooms ? { icon: "&#128719;", label: "Bedrooms", value: property.bedrooms } : null,
-    property.bathrooms ? { icon: "&#128705;", label: "Bathrooms", value: property.bathrooms } : null,
-    { icon: "&#128207;", label: "Area", value: `${property.area} sqm` },
-    { icon: typeIcon(property.type), label: "Type", value: typeLabel(property.type) }
+    property.bedrooms ? { icon: "bed", label: "Bedrooms", value: property.bedrooms } : null,
+    property.bathrooms ? { icon: "bath", label: "Bathrooms", value: property.bathrooms } : null,
+    { icon: "ruler", label: "Area", value: `${property.area} sqm` },
+    { icon: TYPE_META[property.type]?.icon || "home", label: "Type", value: typeLabel(property.type) }
   ].filter(Boolean);
 
   specsEl.innerHTML = specs
     .map(
       (spec) => `
         <div class="spec-item">
-          <span class="spec-icon" aria-hidden="true">${spec.icon}</span>
+          <span class="spec-icon" aria-hidden="true">${lucideIcon(spec.icon)}</span>
           <span class="spec-value">${spec.value}</span>
           <span class="spec-label">${spec.label}</span>
         </div>
@@ -180,7 +183,7 @@ function renderDescriptionAndAmenities(property) {
   const amenitiesEl = document.querySelector("[data-property-amenities]");
   if (amenitiesEl) {
     amenitiesEl.innerHTML = property.amenities
-      .map((item) => `<li><span aria-hidden="true">&#10003;</span> ${item}</li>`)
+      .map((item) => `<li>${lucideIcon("check")} ${item}</li>`)
       .join("");
   }
 }
@@ -225,7 +228,7 @@ function renderAgent(property) {
     return;
   }
 
-  const verifiedBadge = agent.verified ? '<span class="badge badge-verified">&#10003; Verified</span>' : "";
+  const verifiedBadge = agent.verified ? `<span class="badge badge-verified">${lucideIcon("badge-check")} Verified</span>` : "";
   const initials = agent.name.split(" ").map((n) => n[0]).join("");
 
   agentEl.innerHTML = `
@@ -240,7 +243,7 @@ function renderAgent(property) {
       <h3 class="agent-mini-name"><a href="agent-profile.html?id=${agent.id}">${agent.name}</a></h3>
       ${verifiedBadge}
       <p class="agent-mini-meta">${agent.experienceYears} yrs experience</p>
-      <p class="agent-mini-rating">&#9733; ${agent.rating.toFixed(1)} (${agent.reviewCount} reviews)</p>
+      <p class="agent-mini-rating">${lucideIcon("star", { filled: true })} ${agent.rating.toFixed(1)} (${agent.reviewCount} reviews)</p>
     </div>
   `;
 
@@ -278,17 +281,17 @@ function initSaveAndShare(property) {
       return;
     }
 
-    const originalLabel = shareBtn.textContent;
+    const originalMarkup = shareBtn.innerHTML;
     try {
       await navigator.clipboard.writeText(window.location.href);
       shareBtn.textContent = "Link Copied!";
     } catch (error) {
       window.prompt("Copy this link:", window.location.href);
-      shareBtn.textContent = originalLabel;
+      shareBtn.innerHTML = originalMarkup;
       return;
     }
     setTimeout(() => {
-      shareBtn.textContent = originalLabel;
+      shareBtn.innerHTML = originalMarkup;
     }, 2000);
   });
 }

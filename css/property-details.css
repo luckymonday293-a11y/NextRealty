@@ -160,8 +160,7 @@
   color: var(--color-text-secondary);
 }
 
-.details-location::before {
-  content: "\1F4CD";
+.details-location .lucide-icon {
   margin-right: 6px;
 }
 

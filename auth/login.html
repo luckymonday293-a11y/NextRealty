@@ -72,7 +72,12 @@
 
           <div class="auth-divider"><span>or</span></div>
           <button type="button" class="google-auth-button" data-google-auth>
-            <span class="google-mark" aria-hidden="true">G</span>
+            <svg class="google-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.55-.2-2.27H12v4.51h6.44c-.28 1.45-1.12 2.68-2.38 3.5v2.93h3.86c2.26-2.08 3.57-5.15 3.57-8.67z" />
+              <path fill="#34A853" d="M12 24c3.24 0 5.96-1.08 7.95-2.93l-3.86-2.93c-1.08.72-2.46 1.15-4.09 1.15-3.14 0-5.8-2.12-6.76-4.97H1.26v3.02A12 12 0 0 0 12 24z" />
+              <path fill="#FBBC05" d="M5.24 14.32a7.2 7.2 0 0 1 0-4.64V6.66H1.26a12 12 0 0 0 0 10.68l3.98-3.02z" />
+              <path fill="#EA4335" d="M12 4.76c1.77 0 3.35.61 4.6 1.81l3.45-3.45C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.26 6.66l3.98 3.02C6.2 6.88 8.86 4.76 12 4.76z" />
+            </svg>
             Continue with Google
           </button>
 
@@ -81,7 +86,7 @@
 
         <!-- ============ LOGIN SUCCESS ============ -->
         <div class="auth-success" data-login-success hidden>
-          <span class="auth-success-icon" aria-hidden="true">&#10003;</span>
+          <span class="auth-success-icon" aria-hidden="true"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
           <h1 class="auth-card-heading">Welcome back!</h1>
           <p>Redirecting you to your dashboard&hellip;</p>
         </div>
@@ -100,14 +105,14 @@
               <button type="submit" class="btn btn-primary btn-block">Send Reset Link</button>
             </form>
 
-            <p class="auth-switch"><a href="#" data-forgot-back>&larr; Back to Sign In</a></p>
+            <p class="auth-switch"><a href="#" data-forgot-back><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to Sign In</a></p>
           </div>
 
           <div class="auth-success" data-forgot-success hidden>
-            <span class="auth-success-icon" aria-hidden="true">&#9993;</span>
+            <span class="auth-success-icon" aria-hidden="true"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
             <h1 class="auth-card-heading">Check Your Email</h1>
             <p>If an account exists for that email, we've sent a password reset link.</p>
-            <p class="auth-switch mt-3"><a href="#" data-forgot-back>&larr; Back to Sign In</a></p>
+            <p class="auth-switch mt-3"><a href="#" data-forgot-back><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to Sign In</a></p>
           </div>
         </div>
 

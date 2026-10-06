@@ -29,7 +29,7 @@
 
       <div class="navbar-actions">
         <a href="favorites.html" class="btn-icon navbar-favorites" aria-label="View favorites">
-          &hearts;
+          <svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></svg>
           <span class="favorites-count" data-favorites-count>0</span>
         </a>
         <div class="navbar-cta">
@@ -59,7 +59,7 @@
     <!-- ============ NOT FOUND STATE ============ -->
     <section class="section empty-state" data-not-found hidden>
       <div class="container">
-        <div class="empty-state-icon" aria-hidden="true">&#128269;</div>
+        <div class="empty-state-icon" aria-hidden="true"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
         <h3>Agent not found</h3>
         <p>This profile may have been removed or the link is incorrect.</p>
         <a href="agents.html" class="btn btn-secondary mt-2">Browse All Agents</a>
@@ -117,7 +117,7 @@
           <div class="property-grid reveal" data-agent-listings></div>
 
           <div class="empty-state" data-agent-listings-empty hidden>
-            <div class="empty-state-icon" aria-hidden="true">&#127968;</div>
+            <div class="empty-state-icon" aria-hidden="true"><svg class="lucide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg></div>
             <h3>No active listings right now</h3>
             <p>Check back soon, or browse all properties in the meantime.</p>
             <a href="properties.html" class="btn btn-secondary mt-2">Browse All Properties</a>
@@ -147,11 +147,11 @@
               <div class="form-group">
                 <label class="form-label" for="review-rating">Rating</label>
                 <select class="form-select" id="review-rating" name="rating" required>
-                  <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; — Excellent</option>
-                  <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; — Good</option>
-                  <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; — Average</option>
-                  <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; — Poor</option>
-                  <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; — Very Poor</option>
+                  <option value="5">5/5 — Excellent</option>
+                  <option value="4">4/5 — Good</option>
+                  <option value="3">3/5 — Average</option>
+                  <option value="2">2/5 — Poor</option>
+                  <option value="1">1/5 — Very Poor</option>
                 </select>
               </div>
               <div class="form-group">

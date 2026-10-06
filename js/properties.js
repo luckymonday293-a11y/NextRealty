@@ -133,7 +133,7 @@ function renderPagination(totalPages) {
 
   let markup = `<button type="button" class="pagination-btn" data-page="prev" ${
     currentPage === 1 ? "disabled" : ""
-  } aria-label="Previous page">&larr;</button>`;
+  } aria-label="Previous page">${lucideIcon("chevron-left")}</button>`;
 
   for (let page = 1; page <= totalPages; page++) {
     markup += `<button type="button" class="pagination-btn ${
@@ -143,7 +143,7 @@ function renderPagination(totalPages) {
 
   markup += `<button type="button" class="pagination-btn" data-page="next" ${
     currentPage === totalPages ? "disabled" : ""
-  } aria-label="Next page">&rarr;</button>`;
+  } aria-label="Next page">${lucideIcon("chevron-right")}</button>`;
 
   nav.innerHTML = markup;
 
